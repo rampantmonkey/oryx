@@ -3,7 +3,8 @@ module Oryx
     def initialize
     end
 
-    def parse
+    def parse content
+      content
     end
 
   end
