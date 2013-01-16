@@ -11,6 +11,11 @@ module Oryx
         test_input = ""
         assert_equal test_input, @preprocessor.parse(test_input)
       end
+
+      should "not modify simple assignment" do
+        test_input = "int length=7;"
+        assert_equal test_input, @preprocessor.parse(test_input)
+      end
     end
   end
 end
