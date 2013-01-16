@@ -17,8 +17,8 @@ module Oryx
         assert_equal test_input, @preprocessor.parse(test_input)
       end
 
-      should "remove comment" do
-        test_input = "/* this is a comment in c */"
+      should "remove block comment" do
+        test_input = "/* this is a block comment in c */"
         assert_equal "", @preprocessor.parse(test_input)
       end
     end
