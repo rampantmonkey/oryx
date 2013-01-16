@@ -42,6 +42,24 @@ module Oryx
         assert_equal "int a = 5;", @preprocessor.parse(test_input)
       end
     end
+
+    context "multi line test" do
+      setup do
+        @preprocessor = Preprocessor.new
+      end
+
+      should "remove extra newline" do
+        test_input = "\n"
+        assert_equal "", @preprocessor.parse(test_input)
+      end
+
+      should "do nothing" do
+        test_input = "int a=5;\na++"
+        assert_equal test_input, @preprocessor.parse(test_input)
+      end
+    end
+
+
   end
 end
 
