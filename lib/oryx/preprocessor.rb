@@ -4,8 +4,13 @@ module Oryx
     end
 
     def parse content
-      content
+      remove_comment content
     end
+
+    def remove_comment content
+      content.gsub /\/\*.*?\*\//, ''
+    end
+
 
   end
 end
