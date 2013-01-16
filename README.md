@@ -1,6 +1,6 @@
 # Oryx
 
-TODO: Write a gem description
+C to x86 compiler.
 
 ## Installation
 
