@@ -16,6 +16,11 @@ module Oryx
         test_input = "int length=7;"
         assert_equal test_input, @preprocessor.parse(test_input)
       end
+
+      should "remove comment" do
+        test_input = "/* this is a comment in c */"
+        assert_equal "", @preprocessor.parse(test_input)
+      end
     end
   end
 end
