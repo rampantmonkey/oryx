@@ -42,5 +42,12 @@ module Oryx
     # Numerics
     rule(/\d+/) { |t| [:NUM, t.to_i] }
 
+    # Comments
+    rule(/\/\//)             { push_state :cpp_comment }
+    rule(/\n/, :cpp_comment) { pop_state }
+    rule(/./, :cpp_comment)
+    rule(/\/\*/)             { push_state :c_comment }
+    rule(/\*\//, :c_comment) { pop_state }
+    rule(/./, :c_comment)
   end
 end
