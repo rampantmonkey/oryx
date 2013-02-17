@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = Oryx::VERSION
   gem.authors       = ["Casey Robinson"]
   gem.email         = ["kc@rampantmonkey.com"]
-  gem.description   = %q{C to x86 compiler}
-  gem.summary       = %q{Take a program written in C and convert it to x86 assembly}
+  gem.description   = %q{C-Flat to x86 compiler}
+  gem.summary       = %q{Take a program written in C-Flat and convert it to x86 assembly}
   gem.homepage      = "rampantmonkey.com"
 
   gem.files         = `git ls-files`.split($/)
