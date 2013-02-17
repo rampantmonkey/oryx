@@ -49,6 +49,55 @@ module Oryx
       end
     end
 
+    context "operators and delimiters" do
+      should "match )" do
+        compare('(', ["LPAREN", "EOS"])
+      end
+      should "match (" do
+        compare(')', ["RPAREN", "EOS"])
+      end
+      should "match *" do
+        compare('*', ["TIMES", "EOS"])
+      end
+      should "match " do
+        compare('/', ["DIV", "EOS"])
+      end
+      should "match +" do
+        compare('+', ["PLUS", "EOS"])
+      end
+      should "match -" do
+        compare('-', ["MINUS", "EOS"])
+      end
+      should "match <" do
+        compare('<', ["LE", "EOS"])
+      end
+      should "match <=" do
+        compare('<=', ["LEQ", "EOS"])
+      end
+      should "match >=" do
+        compare('>=', ["GEQ", "EOS"])
+      end
+      should "match >" do
+        compare('>', ["GE", "EOS"])
+      end
+      should "match ==" do
+        compare('==', ["EQ", "EOS"])
+      end
+      should "match !=" do
+        compare('!=', ["NEQ", "EOS"])
+      end
+      should "match &&" do
+        compare('&&', ["AND", "EOS"])
+      end
+      should "match ||" do
+        compare('||', ["OR", "EOS"])
+      end
+      should "match =" do
+        compare('=', ["ASSIGN", "EOS"])
+      end
+    end
+
+
     context "test.cflat" do
       should "replicate results from example" do
         input = "char true boolean\nboolean ( +\nstring s"
