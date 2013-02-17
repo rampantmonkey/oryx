@@ -6,46 +6,46 @@ module Oryx
     def compare(input, expected)
       l = Lexer.new
       l.lex(input).each_with_index do |t, i|
-        assert_equal expected[i].upcase, t.to_s
+        assert_equal expected[i], t.to_s
       end
     end
 
     context "keywords" do
       should "match boolean" do
-        compare("boolean", ["boolean", "eos"])
+        compare("boolean", ["BOOLEAN", "EOS"])
       end
       should "match char" do
-        compare("char", ["char", "eos"])
+        compare("char", ["CHAR", "EOS"])
       end
       should "match else" do
-        compare("else", ["else", "eos"])
+        compare("else", ["ELSE", "EOS"])
       end
       should "match false" do
-        compare("false", ["false", "eos"])
+        compare("false", ["FALSE", "EOS"])
       end
       should "match if" do
-        compare("if", ["if", "eos"])
+        compare("if", ["IF", "EOS"])
       end
       should "match int" do
-        compare("int", ["int", "eos"])
+        compare("int", ["INT", "EOS"])
       end
       should "match print" do
-        compare("print", ["print", "eos"])
+        compare("print", ["PRINT", "EOS"])
       end
       should "match return" do
-        compare("return", ["return", "eos"])
+        compare("return", ["RETURN", "EOS"])
       end
       should "match string" do
-        compare("string", ["string", "eos"])
+        compare("string", ["STRING", "EOS"])
       end
       should "match true" do
-        compare("true", ["true", "eos"])
+        compare("true", ["TRUE", "EOS"])
       end
       should "match void" do
-        compare("void", ["void", "eos"])
+        compare("void", ["VOID", "EOS"])
       end
       should "match while" do
-        compare("while", ["while", "eos"])
+        compare("while", ["WHILE", "EOS"])
       end
     end
 
