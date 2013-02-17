@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'oryx/runner'
+
+runner = Oryx::Runner.new(ARGV)
+runner.run
