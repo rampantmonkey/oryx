@@ -28,7 +28,6 @@ module Oryx
           exit
         end
         opts.on("-o", "--output FILE", String, "Output filename") do |path|
-          puts path
           @config[:output] = Pathname.new(path).expand_path
         end
 
