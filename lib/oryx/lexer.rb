@@ -39,5 +39,8 @@ module Oryx
     # Identifier
     rule(/[_A-Za-z][_A-Za-z0-9]*/) { |t| [:IDENT, t] }
 
+    # Numerics
+    rule(/\d+/) { |t| [:NUM, t.to_i] }
+
   end
 end
