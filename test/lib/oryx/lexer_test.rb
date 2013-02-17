@@ -49,13 +49,6 @@ module Oryx
       end
     end
 
-    context "multiple keywords" do
-      should "match random selection of keywords in order" do
-        keywords = ["boolean", "char", "else", "false", "if", "int", "print", "return", "string", "true", "void", "while"]
-        100.times do
-          a = keywords.sample 5
-          compare a.join(" "), (a << "EOS")
-        end
       end
     end
 
