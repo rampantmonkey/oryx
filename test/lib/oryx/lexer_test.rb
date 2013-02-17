@@ -10,6 +10,19 @@ module Oryx
       end
     end
 
+    def valid_id? query_id
+      assert is_id? query_id
+    end
+
+    def invalid_id? query_id
+      assert !is_id?(query_id)
+    end
+
+    def is_id? query_id
+      l = Lexer.new
+      l.lex(query_id).first.type.to_s == "IDENT"
+    end
+
     context "keywords" do
       should "match boolean" do
         compare("boolean", ["BOOLEAN", "EOS"])
@@ -94,6 +107,22 @@ module Oryx
       end
       should "match =" do
         compare('=', ["ASSIGN", "EOS"])
+      end
+    end
+
+    context "identifiers" do
+      should "be valid ids" do
+        queries = [ "a",
+                    "a1",
+                    "qwerty_uiop"]
+        queries.each { |q| valid_id? q }
+      end
+
+      should "be invalid ids" do
+        queries = [ "if",
+                    '?',
+                    "1a"]
+        queries.each { |q| invalid_id? q }
       end
     end
 
