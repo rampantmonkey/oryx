@@ -19,5 +19,22 @@ module Oryx
     rule(/void/)    { :VOID    }
     rule(/while/)   { :WHILE   }
 
+    # Operators and delimiters
+    rule(/\(/)      { :LPAREN }
+    rule(/\)/)      { :RPAREN }
+    rule(/\*/)      { :TIMES  }
+    rule(/\//)      { :DIV    }
+    rule(/\+/)      { :PLUS   }
+    rule(/-/)       { :MINUS  }
+    rule(/</)       { :LE     }
+    rule(/<=/)      { :LEQ    }
+    rule(/>=/)      { :GEQ    }
+    rule(/>/)       { :GE     }
+    rule(/==/)      { :EQ     }
+    rule(/\!=/)     { :NEQ    }
+    rule(/&&/)      { :AND    }
+    rule(/\|\|/)    { :OR     }
+    rule(/=/)       { :ASSIGN }
+
   end
 end
