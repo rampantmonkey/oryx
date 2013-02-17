@@ -10,6 +10,13 @@ module Oryx
       @config = {output: DEFAULT_OUTPUT,
                  input:  DEFAULT_INPUT}
       parse(argv)
+      begin
+        input = Pathname.new(argv.pop).expand_path
+        @config[:input] = input
+      rescue TypeError => e
+        STDERR.puts "No input_file specified.\nUse --help for more information."
+        exit(-1)
+      end
     end
 
     def method_missing m, *args, &block
