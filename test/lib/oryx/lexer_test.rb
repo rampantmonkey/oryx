@@ -49,6 +49,11 @@ module Oryx
       end
     end
 
+    context "test.cflat" do
+      should "replicate results from example" do
+        input = "char true boolean\nboolean ( +\nstring s"
+        result = ["CHAR", "TRUE", "BOOLEAN", "BOOLEAN", "LPAREN", "PLUS", "STRING", "IDENT(s)", "EOS"]
+        compare input, result
       end
     end
 
