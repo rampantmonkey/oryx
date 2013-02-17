@@ -49,5 +49,8 @@ module Oryx
     rule(/\/\*/)             { push_state :c_comment }
     rule(/\*\//, :c_comment) { pop_state }
     rule(/./, :c_comment)
+
+    # Invalid token starters
+    rule(/[^(_A-Z|a-z|\s|\(|\)|\*|\/|\+|-|<|>|=|\!|&|\|)]/) { |t| [:INVCHR, t] }
   end
 end
