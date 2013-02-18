@@ -37,7 +37,7 @@ module Oryx
     rule(/=/)       { :ASSIGN }
 
     # Identifier
-    rule(/[_A-Za-z][_A-Za-z0-9]*/) { |t| [:IDENT, t] }
+    rule(/^[^\d\W]\w*/) { |t| [:IDENT, t] }
 
     # Numerics
     rule(/\d+/) { |t| [:NUM, t] }
