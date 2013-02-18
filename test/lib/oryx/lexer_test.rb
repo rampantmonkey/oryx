@@ -15,7 +15,7 @@ module Oryx
     end
 
     def invalid_id? query_id
-      assert !is_id?(query_id)
+      assert !is_id?(query_id), "#{query_id} is a valid id"
     end
 
     def is_id? query_id
