@@ -53,5 +53,8 @@ module Oryx
 
     # Invalid token starters
     rule(/[^(\w|\s|\(|\)|\*|\/|\+|-|<|>|=|\!|&|\|)]/) { |t| [:INVCHR, t] }
+
+    # Pokémon Rule
+    rule(/./) { |t| [:INVCHR, t]}
   end
 end
