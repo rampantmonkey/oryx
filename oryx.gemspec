@@ -20,4 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rake', '~>0.9.2.2'
   gem.add_development_dependency 'shoulda', '~>3.3.2'
   gem.add_dependency 'rltk', '~>2.2.1'
+  gem.add_dependency 'colorize', '~>0.5.8'
 end

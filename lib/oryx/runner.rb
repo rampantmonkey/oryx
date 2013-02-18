@@ -1,4 +1,5 @@
 require_relative '../oryx.rb'
+require 'colorize'
 
 module Oryx
   class Runner
@@ -13,9 +14,10 @@ module Oryx
     def run
       puts "input:  #{input_filename}"
       puts "output: #{output_filename}"
-      puts "lexing...\n\n"
+      print "lexing".blue+"."*17
       l = Lexer.new
       output_filename.open('w:UTF-8') { |f| f.write(tabularize_output l.lex_file(input_filename.to_s)) }
+      puts "complete".green
     end
 
     private
