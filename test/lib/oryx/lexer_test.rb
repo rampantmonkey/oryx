@@ -115,14 +115,25 @@ module Oryx
       should "be valid ids" do
         queries = [ "a",
                     "a1",
-                    "qwerty_uiop"]
+                    "qwerty_uiop",
+                    "abc123",
+                    "ab_12",
+                    "etc",
+                    "j",
+                    "LastNumber",
+                    "not_sureHow_many_more_areNecessary"]
         queries.each { |q| valid_id? q }
       end
 
       should "be invalid ids" do
         queries = [ "if",
                     '?',
-                    "1a"]
+                    "1a",
+                    "1.ab",
+                    "1b a",
+                    "ab 12",
+                    "abc.126",
+                    "!abc123"]
         queries.each { |q| invalid_id? q }
       end
     end
