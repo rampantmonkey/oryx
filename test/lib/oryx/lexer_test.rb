@@ -20,7 +20,8 @@ module Oryx
 
     def is_id? query_id
       l = Lexer.new
-      l.lex(query_id).first.type.to_s == "IDENT"
+      tokens = l.lex(query_id).map{|t| ["IDENT", "EOS"].include? t.type.to_s }
+      !tokens.include? false
     end
 
     context "keywords" do
