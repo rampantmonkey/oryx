@@ -40,7 +40,7 @@ module Oryx
     rule(/[_A-Za-z][_A-Za-z0-9]*/) { |t| [:IDENT, t] }
 
     # Numerics
-    rule(/\d+/) { |t| [:NUM, t.to_i] }
+    rule(/\d+/) { |t| [:NUM, t] }
 
     # Comments
     rule(/\/\//)             { push_state :cpp_comment }
