@@ -48,6 +48,7 @@ module Oryx
     rule(/./, :cpp_comment)
     rule(/\/\*/)             { push_state :c_comment }
     rule(/\*\//, :c_comment) { pop_state }
+    rule(/\*\//)             { :UCOMTER }
     rule(/./, :c_comment)
 
     # Invalid token starters

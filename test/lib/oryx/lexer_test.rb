@@ -135,6 +135,12 @@ module Oryx
       end
     end
 
+    context "comments" do
+      should "produce error token" do
+        compare '*/', ["UCOMTER", "EOS"]
+      end
+    end
+
   end
 end
 
