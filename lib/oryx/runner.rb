@@ -15,12 +15,9 @@ module Oryx
       puts "output: #{output_filename}"
       puts "lexing...\n\n"
       l = Lexer.new
-      l.lex_file(input_filename.to_s).each do |t|
-        s = "#{t.type} #{t.value}"
-        s += " @ #{t.position.line_number},#{t.position.line_offset}" if t.position
-        puts s
-      end
+      output_filename.open('w:UTF-8') { |f| f.write(tabularize_output l.lex_file(input_filename.to_s)) }
     end
+
     private
       def tabularize_output tokens
         s = table_header
