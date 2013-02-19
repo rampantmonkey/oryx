@@ -207,6 +207,17 @@ module Oryx
         end
       end
     end
+
+    context "strings" do
+      should "produce a string constant token" do
+        compare '"a"', ["STRCON(a)", "EOS"]
+      end
+
+      should "produce a longer string constant" do
+        input = '"Why, you stuck up, half-witted, scruffy-looking Nerf herder."'
+        compare input, ["STRCON(#{input[1...-1]})", "EOS"]
+      end
+    end
   end
 end
 

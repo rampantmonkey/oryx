@@ -56,6 +56,10 @@ module Oryx
     rule(/\'((\\(a|b|f|n|r|t|v|\'|\"|\\|\?))|[^\']{1})'/) { |t| [:CHARCON, t[1...-1]] }
     rule(/\'[^\']*'/) { |t| [:INVCON, t[1...-1]] }
 
+    rule(/\"/)              { push_state :string }
+    rule(/[^\"]*/, :string)               { |t| [:STRCON, t] }
+    rule(/\"/, :string)     { pop_state }
+
     # Invalid token starters
     rule(/[^(\w|\s|\(|\)|\*|\/|\+|-|<|>|=|\!|&|\|)\"|\']/) { |t| [:INVCHR, t] }
 
