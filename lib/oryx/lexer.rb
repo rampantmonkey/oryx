@@ -53,7 +53,7 @@ module Oryx
     rule(/./, :c_comment)
 
     # Strings and Characters
-    rule(/\'[^\']{1}'/) { |t| [:CHARCON, t[1]] }
+    rule(/\'((\\(a|b|f|n|r|t|v|\'|\"|\\|\?))|[^\']{1})'/) { |t| [:CHARCON, t[1...-1]] }
     rule(/\'[^\']*'/) { |t| [:INVCON, t[1...-1]] }
 
     # Invalid token starters

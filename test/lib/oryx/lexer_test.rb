@@ -188,6 +188,15 @@ module Oryx
       should "disallow empty character constants" do
         compare "''", ["INVCON()", "EOS"]
       end
+
+      should "match escape sequences" do
+        valid_escapes = %w{a b f n r t v ' " \ ?}
+        valid_escapes.each do |v|
+          sequence = "'\\#{v.lstrip}'"
+          result = ["CHARCON(\\#{v.lstrip})", "EOS"]
+          compare sequence, result
+        end
+      end
     end
   end
 end
