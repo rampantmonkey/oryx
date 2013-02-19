@@ -138,6 +138,29 @@ module Oryx
       end
     end
 
+    context "comments" do
+      should "remove the c-style commment" do
+        compare "/* this is a comment */", ["EOS"]
+      end
+
+      should "remove two line c-style comment" do
+        compare "/* line 1 \n line 2 */", ["EOS"]
+      end
+
+      should "remove multi-line comment (c-style)" do
+        input = "/*" + "dnfdikas kenib UHJa ia !( *(*#ASD}{asdfi%*&) \n"*50 + "*/"
+        compare input, ["EOS"]
+      end
+
+      should "remove c++-style comment" do
+        compare "//\n", ["EOS"]
+      end
+
+      should "return warning with eos in comment" do
+        compare  "/*", ["MCOMTER", "EOS"]
+      end
+
+    end
 
     context "test.cflat" do
       should "replicate results from example" do
