@@ -177,7 +177,7 @@ module Oryx
     end
 
     context "characters" do
-      should "produce a character token" do
+      should "produce a character constant token" do
         compare "'a'", ["CHARCON(a)", "EOS"]
       end
 
