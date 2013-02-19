@@ -217,6 +217,11 @@ module Oryx
         input = '"Why, you stuck up, half-witted, scruffy-looking Nerf herder."'
         compare input, ["STRCON(#{input[1...-1]})", "EOS"]
       end
+
+      should "handle escaped double quote in string" do
+        input = '"\""'
+        compare input, ["STRCON(#{input[1...-1]})", "EOS"]
+      end
     end
   end
 end

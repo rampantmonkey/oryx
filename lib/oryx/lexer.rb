@@ -57,7 +57,7 @@ module Oryx
     rule(/\'[^\']*'/) { |t| [:INVCON, t[1...-1]] }
 
     rule(/\"/)              { push_state :string }
-    rule(/[^\"]*/, :string)               { |t| [:STRCON, t] }
+    rule(/(\\\"|[^\"])*/, :string)               { |t| [:STRCON, t] }
     rule(/\"/, :string)     { pop_state }
 
     # Invalid token starters
