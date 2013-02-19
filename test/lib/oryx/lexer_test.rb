@@ -176,6 +176,19 @@ module Oryx
       end
     end
 
+    context "characters" do
+      should "produce a character token" do
+        compare "'a'", ["CHARCON(a)", "EOS"]
+      end
+
+      should "not be a character constant" do
+        compare "'abc'", ["INVCON(abc)", "EOS"]
+      end
+
+      should "disallow empty character constants" do
+        compare "''", ["INVCON()", "EOS"]
+      end
+    end
   end
 end
 

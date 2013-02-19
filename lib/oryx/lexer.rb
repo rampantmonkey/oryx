@@ -52,8 +52,12 @@ module Oryx
     rule(/\n/, :c_comment)
     rule(/./, :c_comment)
 
+    # Strings and Characters
+    rule(/\'[^\']{1}'/) { |t| [:CHARCON, t[1]] }
+    rule(/\'[^\']*'/) { |t| [:INVCON, t[1...-1]] }
+
     # Invalid token starters
-    rule(/[^(\w|\s|\(|\)|\*|\/|\+|-|<|>|=|\!|&|\|)]/) { |t| [:INVCHR, t] }
+    rule(/[^(\w|\s|\(|\)|\*|\/|\+|-|<|>|=|\!|&|\|)\"|\']/) { |t| [:INVCHR, t] }
 
     # Pokémon Rule
     rule(/./) { |t| [:INVCHR, t]}
