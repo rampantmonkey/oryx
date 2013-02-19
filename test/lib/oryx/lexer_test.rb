@@ -197,6 +197,15 @@ module Oryx
           compare sequence, result
         end
       end
+
+      should "not expand invalid escape sequence" do
+        test_escapes = %w{c d e g h ! ^ &}
+        test_escapes.each do |t|
+          sequence = "'\\#{t.lstrip}'"
+          result = ["INVCON(\\#{t.lstrip})", "EOS"]
+          compare sequence, result
+        end
+      end
     end
   end
 end
