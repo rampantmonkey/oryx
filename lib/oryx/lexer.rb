@@ -61,9 +61,7 @@ module Oryx
     def lex string, file_name = nil
       tokens = super
       if env.flags.include? :c_comment
-        last = tokens.pop
-        tokens << RLTK::Token.new(:MCOMTER)
-        tokens << last
+        tokens.insert -2, RLTK::Token.new(:MCOMTER)
       end
       tokens
     end
