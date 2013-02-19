@@ -46,9 +46,10 @@ module Oryx
     rule(/\/\//)             { push_state :cpp_comment }
     rule(/\n/, :cpp_comment) { pop_state }
     rule(/./, :cpp_comment)
-    rule(/\/\*/)             { push_state :c_comment }
-    rule(/\*\//, :c_comment) { pop_state }
+    rule(/\/\*/)             { push_state :c_comment; set_flag :c_comment}
+    rule(/\*\//, :c_comment) { pop_state; unset_flag :c_comment }
     rule(/\*\//)             { :UCOMTER }
+    rule(/\n/, :c_comment)
     rule(/./, :c_comment)
 
     # Invalid token starters
@@ -56,5 +57,15 @@ module Oryx
 
     # Pokémon Rule
     rule(/./) { |t| [:INVCHR, t]}
+
+    def lex string, file_name = nil
+      tokens = super
+      if env.flags.include? :c_comment
+        last = tokens.pop
+        tokens << RLTK::Token.new(:MCOMTER)
+        tokens << last
+      end
+      tokens
+    end
   end
 end
