@@ -1,6 +1,14 @@
 # Oryx
+C-Flat to x86 compiler.
 
-C to x86 compiler.
+## Progress
+
+- 20 Feb 13
+    + Oryx 0.1.0
+    + Lexer complete
+
+## C-Flat
+C-Flat is a working subset of C designed for use in compilers courses. C-flat includes expressions, basic control flow, recursive functions, and strict type checking. It is object-compatible with ordinary C and thus can take advantage of the standard C library, at least when using limited types.
 
 ## Installation
 
@@ -18,7 +26,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ oryx ~/test.cflat
+
+For more details try
+
+    $ oryx -h
+
+or
+
+    $ man oryx
 
 ## Contributing
 
@@ -29,5 +45,6 @@ TODO: Write usage instructions here
 5. Create new Pull Request
 
 ## Build Status
+[![Build Status](https://travis-ci.org/rampantmonkey/oryx.png)](https://travis-ci.org/rampantmonkey/oryx)
 
-[![Build Status - Master Branch](https://travis-ci.org/rampantmonkey/oryx.png?branch=master)](undefined)
+Provided by [Travis-CI](http://travis-ci.org)
