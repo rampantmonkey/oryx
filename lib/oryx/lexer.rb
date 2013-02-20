@@ -22,6 +22,8 @@ module Oryx
     # Operators and delimiters
     rule(/\(/)      { :LPAREN }
     rule(/\)/)      { :RPAREN }
+    rule(/\{/)      { :LCURLY }
+    rule(/\}/)      { :RCURLY }
     rule(/\*/)      { :TIMES  }
     rule(/\//)      { :DIV    }
     rule(/\+/)      { :PLUS   }
@@ -35,6 +37,8 @@ module Oryx
     rule(/&&/)      { :AND    }
     rule(/\|\|/)    { :OR     }
     rule(/=/)       { :ASSIGN }
+    rule(/;/)       { :SEMI   }
+    rule(/,/)       { :COMMA  }
 
     # Identifier
     rule(/^[^\d\W]\w*/) { |t| [:IDENT, t] }
@@ -63,7 +67,7 @@ module Oryx
     rule(/\"/, :string)              { pop_state }
 
     # Invalid token starters
-    rule(/[^(\w|\s|\(|\)|\*|\/|\+|-|<|>|=|\!|&|\|)\"|\']/) { |t| [:INVCHR, t] }
+    rule(/[^(\w|\s|\(|\)|\{|\}|\*|\/|\+|-|<|>|=|\!|&|\||;|,)\"|\']/) { |t| [:INVCHR, t] }
 
     # Pokémon Rule
     rule(/./) { |t| [:INVCHR, t]}

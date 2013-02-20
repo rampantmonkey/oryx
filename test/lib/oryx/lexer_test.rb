@@ -70,6 +70,12 @@ module Oryx
       should "match (" do
         compare(')', ["RPAREN", "EOS"])
       end
+      should "match {" do
+        compare('{', ["LCURLY", "EOS"])
+      end
+      should "match }" do
+        compare('}', ["RCURLY", "EOS"])
+      end
       should "match *" do
         compare('*', ["TIMES", "EOS"])
       end
@@ -108,6 +114,12 @@ module Oryx
       end
       should "match =" do
         compare('=', ["ASSIGN", "EOS"])
+      end
+      should "match ;" do
+        compare(';', ["SEMI", "EOS"])
+      end
+      should "match ," do
+        compare(',', ["COMMA", "EOS"])
       end
     end
 
