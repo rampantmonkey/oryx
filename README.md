@@ -12,17 +12,11 @@ C-Flat is a working subset of C designed for use in compilers courses. C-flat in
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'oryx'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
     $ gem install oryx
+
+## Requirements
+
+- Ruby >= 1.9.3
 
 ## Usage
 
@@ -34,6 +28,7 @@ For more details try
 
 ## See Also
 `bin/oryx.markdown`
+
 
 ## Contributing
 As this is a course project pull requests will be ignored.
