@@ -37,15 +37,10 @@ or
     $ man oryx
 
 ## Contributing
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+As this is a course project pull requests will be ignored.
 
 ## Build Status
-[![Build Status](https://travis-ci.org/rampantmonkey/oryx.png)](https://travis-ci.org/rampantmonkey/oryx)
+[![Build Status](https://travis-ci.org/rampantmonkey/oryx.png?branch=master)](https://travis-ci.org/rampantmonkey/oryx)
 
 Provided by [Travis-CI](http://travis-ci.org)
 
