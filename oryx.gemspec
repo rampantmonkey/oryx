@@ -6,6 +6,7 @@ require 'oryx/version'
 Gem::Specification.new do |gem|
   gem.name          = "oryx"
   gem.version       = Oryx::VERSION
+  gem.date          = Date.today.to_s
   gem.authors       = ["Casey Robinson"]
   gem.email         = ["kc@rampantmonkey.com"]
   gem.description   = %q{C-Flat to x86 compiler}
