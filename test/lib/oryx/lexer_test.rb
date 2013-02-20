@@ -6,7 +6,7 @@ module Oryx
     def compare(input, expected)
       l = Lexer.new
       l.lex(input).each_with_index do |t, i|
-        assert_equal expected[i], t.to_s
+        assert_equal expected[i], t.to_s unless t.to_s == "EOS"
       end
     end
 
@@ -26,100 +26,100 @@ module Oryx
 
     context "keywords" do
       should "match boolean" do
-        compare("boolean", ["BOOLEAN", "EOS"])
+        compare("boolean", ["BOOLEAN"])
       end
       should "match char" do
-        compare("char", ["CHAR", "EOS"])
+        compare("char", ["CHAR"])
       end
       should "match else" do
-        compare("else", ["ELSE", "EOS"])
+        compare("else", ["ELSE"])
       end
       should "match false" do
-        compare("false", ["FALSE", "EOS"])
+        compare("false", ["FALSE"])
       end
       should "match if" do
-        compare("if", ["IF", "EOS"])
+        compare("if", ["IF"])
       end
       should "match int" do
-        compare("int", ["INT", "EOS"])
+        compare("int", ["INT"])
       end
       should "match print" do
-        compare("print", ["PRINT", "EOS"])
+        compare("print", ["PRINT"])
       end
       should "match return" do
-        compare("return", ["RETURN", "EOS"])
+        compare("return", ["RETURN"])
       end
       should "match string" do
-        compare("string", ["STRING", "EOS"])
+        compare("string", ["STRING"])
       end
       should "match true" do
-        compare("true", ["TRUE", "EOS"])
+        compare("true", ["TRUE"])
       end
       should "match void" do
-        compare("void", ["VOID", "EOS"])
+        compare("void", ["VOID"])
       end
       should "match while" do
-        compare("while", ["WHILE", "EOS"])
+        compare("while", ["WHILE"])
       end
     end
 
     context "operators and delimiters" do
       should "match )" do
-        compare('(', ["LPAREN", "EOS"])
+        compare('(', ["LPAREN"])
       end
       should "match (" do
-        compare(')', ["RPAREN", "EOS"])
+        compare(')', ["RPAREN"])
       end
       should "match {" do
-        compare('{', ["LCURLY", "EOS"])
+        compare('{', ["LCURLY"])
       end
       should "match }" do
-        compare('}', ["RCURLY", "EOS"])
+        compare('}', ["RCURLY"])
       end
       should "match *" do
-        compare('*', ["TIMES", "EOS"])
+        compare('*', ["TIMES"])
       end
       should "match " do
-        compare('/', ["DIV", "EOS"])
+        compare('/', ["DIV"])
       end
       should "match +" do
-        compare('+', ["PLUS", "EOS"])
+        compare('+', ["PLUS"])
       end
       should "match -" do
-        compare('-', ["MINUS", "EOS"])
+        compare('-', ["MINUS"])
       end
       should "match <" do
-        compare('<', ["LE", "EOS"])
+        compare('<', ["LE"])
       end
       should "match <=" do
-        compare('<=', ["LEQ", "EOS"])
+        compare('<=', ["LEQ"])
       end
       should "match >=" do
-        compare('>=', ["GEQ", "EOS"])
+        compare('>=', ["GEQ"])
       end
       should "match >" do
-        compare('>', ["GE", "EOS"])
+        compare('>', ["GE"])
       end
       should "match ==" do
-        compare('==', ["EQ", "EOS"])
+        compare('==', ["EQ"])
       end
       should "match !=" do
-        compare('!=', ["NEQ", "EOS"])
+        compare('!=', ["NEQ"])
       end
       should "match &&" do
-        compare('&&', ["AND", "EOS"])
+        compare('&&', ["AND"])
       end
       should "match ||" do
-        compare('||', ["OR", "EOS"])
+        compare('||', ["OR"])
       end
       should "match =" do
-        compare('=', ["ASSIGN", "EOS"])
+        compare('=', ["ASSIGN"])
       end
       should "match ;" do
-        compare(';', ["SEMI", "EOS"])
+        compare(';', ["SEMI"])
       end
       should "match ," do
-        compare(',', ["COMMA", "EOS"])
+        compare(',', ["COMMA"])
       end
     end
 
@@ -169,7 +169,7 @@ module Oryx
       end
 
       should "return warning with eos in comment" do
-        compare  "/*", ["MCOMTER", "EOS"]
+        compare  "/*", ["MCOMTER"]
       end
 
     end
@@ -177,35 +177,35 @@ module Oryx
     context "test.cflat" do
       should "replicate results from example" do
         input = "char true boolean\nboolean ( +\nstring s"
-        result = ["CHAR", "TRUE", "BOOLEAN", "BOOLEAN", "LPAREN", "PLUS", "STRING", "IDENT(s)", "EOS"]
+        result = ["CHAR", "TRUE", "BOOLEAN", "BOOLEAN", "LPAREN", "PLUS", "STRING", "IDENT(s)"]
         compare input, result
       end
     end
 
     context "comments" do
       should "produce error token" do
-        compare '*/', ["UCOMTER", "EOS"]
+        compare '*/', ["UCOMTER"]
       end
     end
 
     context "characters" do
       should "produce a character constant token" do
-        compare "'a'", ["CHARCON(a)", "EOS"]
+        compare "'a'", ["CHARCON(a)"]
       end
 
       should "not be a character constant" do
-        compare "'abc'", ["INVCON(abc)", "EOS"]
+        compare "'abc'", ["INVCON(abc)"]
       end
 
       should "disallow empty character constants" do
-        compare "''", ["INVCON()", "EOS"]
+        compare "''", ["INVCON()"]
       end
 
       should "match escape sequences" do
         valid_escapes = %w{n 0}
         valid_escapes.each do |v|
           sequence = "'\\#{v.lstrip}'"
-          result = ["CHARCON(\\#{v.lstrip})", "EOS"]
+          result = ["CHARCON(\\#{v.lstrip})"]
           compare sequence, result
         end
       end
@@ -214,7 +214,7 @@ module Oryx
         test_escapes = %w{c d e g h ! ^ &}
         test_escapes.each do |t|
           sequence = "'\\#{t.lstrip}'"
-          result = ["CHARCON(#{t.lstrip})", "EOS"]
+          result = ["CHARCON(#{t.lstrip})"]
           compare sequence, result
         end
       end
@@ -222,28 +222,28 @@ module Oryx
 
     context "strings" do
       should "produce a string constant token" do
-        compare '"a"', ["STRCON(a)", "EOS"]
+        compare '"a"', ["STRCON(a)"]
       end
 
       should "produce a longer string constant" do
         input = '"Why, you stuck up, half-witted, scruffy-looking Nerf herder."'
-        compare input, ["STRCON(#{input[1...-1]})", "EOS"]
+        compare input, ["STRCON(#{input[1...-1]})"]
       end
 
       should "handle escaped double quote in string" do
         input = '"\""'
-        compare input, ["STRCON(#{input[1...-1]})", "EOS"]
+        compare input, ["STRCON(#{input[1...-1]})"]
       end
 
       should "report missing closing double quote" do
         input = '"asdfasdf
         '
-        compare input, ["STRCON(asdfasdf)", "MSTRTER", "EOS"]
+        compare input, ["STRCON(asdfasdf)", "MSTRTER"]
       end
 
       should "report that string is too long" do
         input = '"' + "a"*259 + '"'
-        compare input, ["STRCON(#{'a'*255})", "STRLNG", "EOS"]
+        compare input, ["STRCON(#{'a'*255})", "STRLNG"]
       end
     end
 
