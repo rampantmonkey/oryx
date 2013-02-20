@@ -222,6 +222,12 @@ module Oryx
         input = '"\""'
         compare input, ["STRCON(#{input[1...-1]})", "EOS"]
       end
+
+      should "report missing closing double quote" do
+        input = '"asdfasdf
+        '
+        compare input, ["STRCON(asdfasdf)", "MSTRTER", "EOS"]
+      end
     end
   end
 end
