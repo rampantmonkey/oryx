@@ -241,6 +241,39 @@ module Oryx
         compare input, ["STRCON(asdfasdf)", "MSTRTER", "EOS"]
       end
     end
+
+    context "fibonacci sequence example" do
+      should "match the expected result" do
+        input = <<-'EOF'
+          int x=35;
+          void fib( int x )
+          {
+            if(x<2) {
+              return 1;
+            } else {
+              return fib(x-1)+fib(x-2);
+            } }
+            int main() {
+              int i=x;
+                while(i>0) {
+                  print "fib(", i, ") = ", fib(i), "\n";
+                  i=i-1; }
+              return 0;
+           }
+        EOF
+        expected = %w{INT IDENT(x) ASSIGN NUM(35) SEMI VOID IDENT(fib) LPAREN INT
+                      IDENT(x) RPAREN LCURLY IF LPAREN IDENT(x) LE NUM(2) RPAREN
+                      LCURLY RETURN NUM(1) SEMI RCURLY ELSE LCURLY RETURN IDENT(fib)
+                      LPAREN IDENT(x) MINUS NUM(1) RPAREN PLUS IDENT(fib) LPAREN
+                      IDENT(x) MINUS NUM(2) RPAREN SEMI RCURLY RCURLY INT IDENT(main)
+                      LPAREN RPAREN LCURLY INT IDENT(i) ASSIGN IDENT(x) SEMI WHILE
+                      LPAREN IDENT(i) GE NUM(0) RPAREN LCURLY PRINT STRCON(fib()
+                      COMMA IDENT(i) COMMA STRCON()\ =\ ) COMMA IDENT(fib) LPAREN
+                      IDENT(i) RPAREN COMMA STRCON(\\n) SEMI IDENT(i) ASSIGN IDENT(i)
+                      MINUS NUM(1) SEMI RCURLY RETURN NUM(0) SEMI RCURLY EOS}
+        compare input, expected
+      end
+    end
   end
 end
 
