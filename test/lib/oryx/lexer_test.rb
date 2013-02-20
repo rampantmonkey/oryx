@@ -293,7 +293,7 @@ module Oryx
           random.encode!("ISO-8859-1", invalid: :replace)
           input = random.encode("UTF-8", invalid: :replace)
           l = Lexer.new
-          pp l.lex(input)
+          l.lex(input)
         end
       end
     end
