@@ -48,3 +48,7 @@ or
 [![Build Status](https://travis-ci.org/rampantmonkey/oryx.png)](https://travis-ci.org/rampantmonkey/oryx)
 
 Provided by [Travis-CI](http://travis-ci.org)
+
+## License
+
+MIT
