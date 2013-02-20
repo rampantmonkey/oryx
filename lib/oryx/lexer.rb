@@ -41,10 +41,10 @@ module Oryx
     rule(/,/)       { :COMMA  }
 
     # Identifier
-    rule(/^[^\d\W]\w*/) { |t| [:IDENT, t] }
+    rule(/^[^\d\W]\w*/)      { |t| [:IDENT, t] }
 
     # Numerics
-    rule(/\d+/) { |t| [:NUM, t] }
+    rule(/\d+/)              { |t| [:NUM, t] }
 
     # Comments
     rule(/\/\//)             { push_state :cpp_comment }
@@ -56,13 +56,14 @@ module Oryx
     rule(/\n/, :c_comment)
     rule(/./, :c_comment)
 
-    # Strings and Characters
+    # Characters
     rule(/\'((\\(n|0))|[^\']{1})\'/) { |t| [:CHARCON, t[1...-1]] }
-    rule(/\'\\[^n0]{1}'/)               { |t| [:CHARCON, t[2]] }
-    rule(/\'[^\']*'/) { |t| [:INVCON, t[1...-1]] }
+    rule(/\'\\[^n0]{1}'/)            { |t| [:CHARCON, t[2]] }
+    rule(/\'[^\']*'/)                { |t| [:INVCON, t[1...-1]] }
 
-    rule(/\"/)                       { push_state :string }
-    rule(/\n/, :string)              { pop_state; :MSTRTER }
+    # Strings
+    rule(/\"/)                            { push_state :string }
+    rule(/\n/, :string)                   { pop_state; :MSTRTER }
     rule(/(\\\"|[^\"\n]){,255}/, :string) do |t|
       push_state :str_overflow if t.length == 255
       [:STRCON, t[0...255]]
