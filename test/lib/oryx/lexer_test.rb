@@ -285,6 +285,19 @@ module Oryx
         compare input, expected
       end
     end
+
+    context "randomness" do
+      should "not raise an error" do
+        assert_nothing_raised do
+          random = `cat /dev/urandom | strings | head -100`
+          random.encode!("ISO-8859-1", invalid: :replace)
+          input = random.encode("UTF-8", invalid: :replace)
+          l = Lexer.new
+          pp l.lex(input)
+        end
+      end
+    end
+
   end
 end
 
