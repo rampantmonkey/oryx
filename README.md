@@ -4,7 +4,7 @@ C-Flat to x86 compiler.
 ## Progress
 
 - 20 Feb 13
-    + Oryx 0.1.0
+    + Oryx 0.1.1
     + Lexer complete
 
 ## C-Flat
@@ -32,9 +32,8 @@ For more details try
 
     $ oryx -h
 
-or
-
-    $ man oryx
+## See Also
+`bin/oryx.markdown`
 
 ## Contributing
 As this is a course project pull requests will be ignored.
