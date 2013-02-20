@@ -190,7 +190,7 @@ module Oryx
       end
 
       should "match escape sequences" do
-        valid_escapes = %w{a b f n r t v ' " \ ?}
+        valid_escapes = %w{n 0}
         valid_escapes.each do |v|
           sequence = "'\\#{v.lstrip}'"
           result = ["CHARCON(\\#{v.lstrip})", "EOS"]
@@ -198,11 +198,11 @@ module Oryx
         end
       end
 
-      should "not expand invalid escape sequence" do
+      should "return character for non-special escape sequence" do
         test_escapes = %w{c d e g h ! ^ &}
         test_escapes.each do |t|
           sequence = "'\\#{t.lstrip}'"
-          result = ["INVCON(\\#{t.lstrip})", "EOS"]
+          result = ["CHARCON(#{t.lstrip})", "EOS"]
           compare sequence, result
         end
       end

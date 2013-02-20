@@ -53,7 +53,8 @@ module Oryx
     rule(/./, :c_comment)
 
     # Strings and Characters
-    rule(/\'((\\(a|b|f|n|r|t|v|\'|\"|\\|\?))|[^\']{1})'/) { |t| [:CHARCON, t[1...-1]] }
+    rule(/\'((\\(n|0))|[^\']{1})\'/) { |t| [:CHARCON, t[1...-1]] }
+    rule(/\'\\[^n0]{1}'/)               { |t| [:CHARCON, t[2]] }
     rule(/\'[^\']*'/) { |t| [:INVCON, t[1...-1]] }
 
     rule(/\"/)                       { push_state :string }
