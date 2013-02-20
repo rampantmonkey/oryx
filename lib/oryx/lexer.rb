@@ -63,7 +63,12 @@ module Oryx
 
     rule(/\"/)                       { push_state :string }
     rule(/\n/, :string)              { pop_state; :MSTRTER }
-    rule(/(\\\"|[^\"\n])*/, :string) { |t| [:STRCON, t] }
+    rule(/(\\\"|[^\"\n]){,255}/, :string) do |t|
+      push_state :str_overflow if t.length == 255
+      [:STRCON, t[0...255]]
+    end
+    rule(/[^\"]*/, :str_overflow)    { :STRLNG   }
+    rule(/\"/, :str_overflow)        { pop_state }
     rule(/\"/, :string)              { pop_state }
 
     # Invalid token starters

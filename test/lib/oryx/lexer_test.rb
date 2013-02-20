@@ -240,6 +240,11 @@ module Oryx
         '
         compare input, ["STRCON(asdfasdf)", "MSTRTER", "EOS"]
       end
+
+      should "report that string is too long" do
+        input = '"' + "a"*259 + '"'
+        compare input, ["STRCON(#{'a'*255})", "STRLNG", "EOS"]
+      end
     end
 
     context "fibonacci sequence example" do
