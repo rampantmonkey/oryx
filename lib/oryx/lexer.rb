@@ -40,6 +40,9 @@ module Oryx
     rule(/;/)       { :SEMI   }
     rule(/,/)       { :COMMA  }
 
+    # Continue Line
+    rule(/\\[\ \t]*\n/) { :CONTNL }
+
     # Identifier
     rule(/^[^\d\W]\w*/)      { |t| [:IDENT, t] }
 
@@ -73,7 +76,7 @@ module Oryx
     rule(/\"/, :string)              { pop_state }
 
     # Invalid token starters
-    rule(/[^(\w|\s|\(|\)|\{|\}|\*|\/|\+|-|<|>|=|\!|&|\||;|,)\"|\']/) { |t| [:INVCHR, t] }
+    rule(/[^(\w|\s|\(|\)|\{|\}|\*|\/|\+|-|<|>|=|\!|&|\||;|,)\"|\'|\\]/) { |t| [:INVCHR, t] }
 
     # Pokémon Rule
     rule(/./) { |t| [:INVCHR, t]}

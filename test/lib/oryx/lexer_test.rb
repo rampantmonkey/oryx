@@ -121,6 +121,12 @@ module Oryx
       should "match ," do
         compare(',', ["COMMA"])
       end
+      should "match newline" do
+        queries = [ "\\\n",
+                    "\\\t\n",
+                    "\\   \n"]
+        queries.each { |q| compare q, ["CONTNL"] }
+      end
     end
 
     context "identifiers" do
