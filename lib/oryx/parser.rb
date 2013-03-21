@@ -11,6 +11,17 @@ module Oryx
     production(:input) do
       clause('') { || [] }
       clause('statement_list') { |sl| sl }
+    production(:external_declaration) do
+      clause('vdecl') { |v| v }
+      clause('vinit') { |v| v }
+    end
+
+    production(:ext_dec_list) do
+      clause('') { || [] }
+      clause('ext_dec_list external_declaration') { |edl, ed| [edl] + Array(ed) }
+      clause('external_declaration') { |ed| [ed] }
+    end
+
     production(:vdecl) do
       clause('type_spec IDENT SEMI') { |t, i, _| Variable.new i}
     end
