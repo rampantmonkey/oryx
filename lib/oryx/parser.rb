@@ -4,6 +4,9 @@ require_relative "../oryx"
 module Oryx
   class Parser < RLTK::Parser
 
+    left :PLUS, :MINUS
+    left :TIMES, :DIV
+
     production(:statment) do
       clause('e SEMI') { |e, _| e }
     end
