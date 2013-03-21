@@ -11,6 +11,14 @@ module Oryx
     production(:input) do
       clause('') { || [] }
       clause('statement_list') { |sl| sl }
+    production(:type_spec) do
+      clause('BOOLEAN') { |_| }
+      clause('CHAR')    { |_| }
+      clause('INT')     { |_| }
+      clause('STRING')  { |_| }
+      clause('VOID')    { |_| }
+    end
+
     end
 
     production(:statement_list) do
