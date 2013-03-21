@@ -10,7 +10,7 @@ module Oryx
 
     production(:input) do
       clause('') { || [] }
-      clause('statement_list') { |sl| sl }
+      clause('ext_dec_list') { |edl| edl }
     production(:external_declaration) do
       clause('vdecl') { |v| v }
       clause('vinit') { |v| v }
