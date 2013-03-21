@@ -4,7 +4,7 @@ require_relative "../oryx"
 module Oryx
   class Parser < RLTK::Parser
 
-    left :ASSIGN
+    left :ASSIGN, :RETURN
     left :PLUS, :MINUS
     left :TIMES, :DIV
 
