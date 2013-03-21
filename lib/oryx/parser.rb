@@ -8,13 +8,18 @@ module Oryx
     left :PLUS, :MINUS
     left :TIMES, :DIV
 
-    production(:statment) do
+    production(:input) do
+      clause('') { || [] }
+      clause('statement_list') { |sl| sl }
+    end
+
     production(:statement_list) do
       clause('') { || [] }
       clause('statement_list statement') { |sl, s| [sl] + Array(s) }
       clause('statement') { |s| [s] }
     end
 
+    production(:statement) do
       clause('e SEMI') { |e, _| e }
     end
 
