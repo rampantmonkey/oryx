@@ -18,6 +18,9 @@ module Oryx
       l = Lexer.new
       output_filename.open('w:UTF-8') { |f| f.write(tabularize_output l.lex_file(input_filename.to_s)) }
       puts "complete".green
+
+      p = Parser.new
+      p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot')
     end
 
     private
