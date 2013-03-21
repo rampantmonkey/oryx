@@ -11,9 +11,12 @@ module Oryx
     production(:input) do
       clause('') { || [] }
       clause('ext_dec_list') { |edl| edl }
+    end
+
     production(:external_declaration) do
       clause('vdecl') { |v| v }
       clause('vinit') { |v| v }
+      clause('fdecl') { |f| f }
     end
 
     production(:ext_dec_list) do
@@ -30,6 +33,10 @@ module Oryx
       clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| Variable.new i}
     end
 
+    production(:fdecl) do
+      clause('type_spec IDENT LPAREN RPAREN code_block') { |t, i, _, _, c| c }
+    end
+
     production(:constant) do
       clause('NUM')     { |n| n }
       clause('STRCON')  { |s| s }
@@ -44,6 +51,8 @@ module Oryx
       clause('VOID')    { |_| }
     end
 
+    production(:code_block) do
+      clause('LCURLY statement_list RCURLY') { |_, sl, _| sl }
     end
 
     production(:statement_list) do
