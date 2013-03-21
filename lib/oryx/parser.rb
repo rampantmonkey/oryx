@@ -5,6 +5,8 @@ module Oryx
   class Parser < RLTK::Parser
 
     left :ASSIGN, :RETURN
+    left :EQ, :NEQ
+    left :GE, :GEQ, :LE, :LEQ
     left :PLUS, :MINUS
     left :TIMES, :DIV
 
@@ -92,6 +94,13 @@ module Oryx
       clause('e MINUS e') { |e0, _, e1| Sub.new(e0, e1) }
       clause('e TIMES e') { |e0, _, e1| Mul.new(e0, e1) }
       clause('e DIV e')   { |e0, _, e1| Div.new(e0, e1) }
+      clause('e GE e')    { |e0, _, e1| GE.new(e0, e1) }
+      clause('e GEQ e')   { |e0, _, e1| GEQ.new(e0, e1) }
+      clause('e LE e')    { |e0, _, e1| LE.new(e0, e1) }
+      clause('e LEQ e')   { |e0, _, e1| LEQ.new(e0, e1) }
+      clause('e EQ e')    { |e0, _, e1| EQ.new(e0, e1) }
+      clause('e NEQ e')   { |e0, _, e1| NEQ.new(e0, e1) }
+
 
       clause('RETURN e')  { |_, e| Return.new e }
     end

@@ -26,6 +26,13 @@ module Oryx
   class Mul < Binary; end
   class Div < Binary; end
 
+  class GE  < Binary; end
+  class GEQ < Binary; end
+  class LE  < Binary; end
+  class LEQ < Binary; end
+  class EQ < Binary; end
+  class NEQ < Binary; end
+
   class Return < Expression
     child :right, Expression
   end
