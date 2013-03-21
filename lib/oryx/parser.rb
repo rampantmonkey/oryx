@@ -15,6 +15,16 @@ module Oryx
       clause('type_spec IDENT SEMI') { |t, i, _| Variable.new i}
     end
 
+    production(:vinit) do
+      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| Variable.new i}
+    end
+
+    production(:constant) do
+      clause('NUM')     { |n| n }
+      clause('STRCON')  { |s| s }
+      clause('CHARCON') { |c| c }
+    end
+
     production(:type_spec) do
       clause('BOOLEAN') { |_| }
       clause('CHAR')    { |_| }
