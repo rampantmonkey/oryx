@@ -26,4 +26,8 @@ module Oryx
   class Mul < Binary; end
   class Div < Binary; end
 
+  class Return < Expression
+    child :right, Expression
+  end
+
 end
