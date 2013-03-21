@@ -4,6 +4,7 @@ require_relative "../oryx"
 module Oryx
   class Parser < RLTK::Parser
 
+    left :ASSIGN
     left :PLUS, :MINUS
     left :TIMES, :DIV
 
@@ -14,6 +15,7 @@ module Oryx
     production(:e) do
       clause('NUM')   { |i| Number.new i.to_i }
       clause('IDENT') { |i| Variable.new i }
+      clause('IDENT ASSIGN e') { |e0, _, e1| Assign.new e0, e1 }
 
       clause('e PLUS e')  { |e0, _, e1|  Add.new(e0, e1) }
       clause('e MINUS e') { |e0, _, e1|  Sub.new(e0, e1) }

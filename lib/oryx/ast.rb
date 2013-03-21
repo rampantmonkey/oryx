@@ -16,9 +16,14 @@ module Oryx
     child :right, Expression
   end
 
+  class Assign < Expression
+    value :name, String
+    child :right, Expression
+  end
 
   class Add < Binary; end
   class Sub < Binary; end
   class Mul < Binary; end
   class Div < Binary; end
+
 end
