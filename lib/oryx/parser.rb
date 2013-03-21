@@ -11,6 +11,10 @@ module Oryx
     production(:input) do
       clause('') { || [] }
       clause('statement_list') { |sl| sl }
+    production(:vdecl) do
+      clause('type_spec IDENT SEMI') { |t, i, _| Variable.new i}
+    end
+
     production(:type_spec) do
       clause('BOOLEAN') { |_| }
       clause('CHAR')    { |_| }
