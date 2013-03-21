@@ -52,9 +52,9 @@ module Oryx
     end
 
     production(:constant) do
-      clause('NUM')     { |n| n }
-      clause('STRCON')  { |s| s }
-      clause('CHARCON') { |c| c }
+      clause('NUM')     { |n| Number.new n.to_i }
+      clause('STRCON')  { |s| Cstring.new s}
+      clause('CHARCON') { |c| Char.new c }
     end
 
     production(:type_spec) do
@@ -82,8 +82,8 @@ module Oryx
     production(:e) do
       clause('LPAREN e RPAREN') { |_, e, _| e }
 
-      clause('NUM')   { |i| Number.new i.to_i }
       clause('IDENT') { |i| Variable.new i }
+      clause('constant') { |c| c }
       clause('IDENT ASSIGN e') { |e0, _, e1| Assign.new e0, e1 }
 
       clause('e PLUS e')  { |e0, _, e1|  Add.new(e0, e1) }
