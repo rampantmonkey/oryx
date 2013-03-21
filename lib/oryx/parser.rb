@@ -9,6 +9,12 @@ module Oryx
     left :TIMES, :DIV
 
     production(:statment) do
+    production(:statement_list) do
+      clause('') { || [] }
+      clause('statement_list statement') { |sl, s| [sl] + Array(s) }
+      clause('statement') { |s| [s] }
+    end
+
       clause('e SEMI') { |e, _| e }
     end
 
