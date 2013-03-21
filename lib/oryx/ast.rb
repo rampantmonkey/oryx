@@ -30,4 +30,10 @@ module Oryx
     child :right, Expression
   end
 
+  class If < Expression
+    child :cond, Expression
+    child :then, Expression
+    child :else, Expression
+  end
+
 end

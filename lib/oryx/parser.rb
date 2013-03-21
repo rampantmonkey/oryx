@@ -77,6 +77,8 @@ module Oryx
 
     production(:statement) do
       clause('e SEMI') { |e, _| e }
+      clause('IF LPAREN e RPAREN statement') { |_, _, e, _, s| If.new(e, s, nil) }
+      clause('IF LPAREN e RPAREN statement ELSE statement') { |_,_,e,_,ts,_,fs| If.new(e, ts, fs) }
     end
 
     production(:e) do
