@@ -13,6 +13,8 @@ module Oryx
     end
 
     production(:e) do
+      clause('LPAREN e RPAREN') { |_, e, _| e }
+
       clause('NUM')   { |i| Number.new i.to_i }
       clause('IDENT') { |i| Variable.new i }
       clause('IDENT ASSIGN e') { |e0, _, e1| Assign.new e0, e1 }
