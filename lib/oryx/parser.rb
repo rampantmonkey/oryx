@@ -105,6 +105,6 @@ module Oryx
       clause('RETURN e')  { |_, e| Return.new e }
     end
 
-    finalize
+    finalize explain: 'explain.out'
   end
 end

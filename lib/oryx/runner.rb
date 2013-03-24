@@ -20,7 +20,7 @@ module Oryx
       puts "complete".green
 
       p = Parser.new
-      p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot')
+      p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot', verbose: 'parse.out')
     end
 
     private
