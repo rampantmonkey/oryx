@@ -22,8 +22,7 @@ module Oryx
     end
 
     production(:ext_dec_list) do
-      clause('') { || [] }
-      clause('ext_dec_list external_declaration') { |edl, ed| [edl] + Array(ed) }
+      clause('ext_dec_list external_declaration') { |edl, ed| edl + Array(ed)}
       clause('external_declaration') { |ed| [ed] }
     end
 
@@ -32,21 +31,21 @@ module Oryx
     end
 
     production(:vinit) do
-      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| Variable.new i}
+      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| Assign.new i, c}
     end
 
     production(:fdecl) do
-      clause('type_spec IDENT LPAREN opt_param_list RPAREN code_block') { |t, i, _, opl,  _, c| c }
+      clause('type_spec IDENT LPAREN opt_param_list RPAREN code_block') { |t, i, _, opl,  _, c| Function.new i, opl, c }
     end
 
     production(:opt_param_list) do
-      clause('') { || [] }
-      clause('param_list') { |pl| pl }
+      clause('') { || ParamList.new [] }
+      clause('param_list') { |pl| ParamList.new pl}
     end
 
     production(:param_list) do
       clause('param') { |p| [p] }
-      clause('param COMMA param_list') { |p, _, pl| Array(p) + [pl] }
+      clause('param COMMA param_list') { |p, _, pl| Array(p) + pl }
     end
 
     production(:param) do
@@ -68,12 +67,12 @@ module Oryx
     end
 
     production(:code_block) do
-      clause('LCURLY statement_list RCURLY') { |_, sl, _| sl }
+      clause('LCURLY statement_list RCURLY') { |_, sl, _| CodeBlock.new(sl) }
     end
 
     production(:statement_list) do
       clause('') { || [] }
-      clause('statement_list statement') { |sl, s| [sl] + Array(s) }
+      clause('statement_list statement') { |sl, s| sl + Array(s) }
       clause('statement') { |s| [s] }
     end
 
@@ -81,6 +80,7 @@ module Oryx
       clause('e SEMI') { |e, _| e }
       clause('IF LPAREN e RPAREN statement') { |_, _, e, _, s| If.new(e, s, nil) }
       clause('IF LPAREN e RPAREN statement ELSE statement') { |_,_,e,_,ts,_,fs| If.new(e, ts, fs) }
+      clause('IF LPAREN e RPAREN code_block ELSE code_block') {|_,_,e,_,tc,_,fc| If.new(e, tc, fc) }
     end
 
     production(:e) do
@@ -103,6 +103,7 @@ module Oryx
 
 
       clause('RETURN e')  { |_, e| Return.new e }
+
     end
 
     finalize explain: 'explain.out'

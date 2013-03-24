@@ -43,4 +43,19 @@ module Oryx
     child :else, Expression
   end
 
+  class CodeBlock < Expression
+    child :statements, [Expression]
+  end
+
+  class ParamList < RLTK::ASTNode
+    child :params, [Expression]
+  end
+
+  class Function < RLTK::ASTNode
+    value :i, String
+    child :params, ParamList
+    child :body, CodeBlock
+  end
+
+
 end
