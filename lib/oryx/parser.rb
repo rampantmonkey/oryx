@@ -78,10 +78,14 @@ module Oryx
 
     production(:statement) do
       clause('e SEMI') { |e, _| e }
+      clause('if_statement') { |i| i}
+      clause('WHILE LPAREN e RPAREN code_block') {|_,_,e,_,c| While.new(e,c) }
+    end
+
+    production(:if_statement) do
       clause('IF LPAREN e RPAREN statement') { |_, _, e, _, s| If.new(e, s, nil) }
       clause('IF LPAREN e RPAREN statement ELSE statement') { |_,_,e,_,ts,_,fs| If.new(e, ts, fs) }
       clause('IF LPAREN e RPAREN code_block ELSE code_block') {|_,_,e,_,tc,_,fc| If.new(e, tc, fc) }
-      clause('WHILE LPAREN e RPAREN code_block') {|_,_,e,_,c| While.new(e,c) }
     end
 
     production(:e) do
