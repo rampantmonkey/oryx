@@ -62,4 +62,13 @@ module Oryx
     child :body, CodeBlock
   end
 
+  class Type < Expression
+    value :t, String
+  end
+
+  class Boolean < Type; end
+  class Char < Type; end
+  class Int < Type; end
+  class Str < Type; end
+
 end

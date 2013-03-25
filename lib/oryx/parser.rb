@@ -59,10 +59,10 @@ module Oryx
     end
 
     production(:type_spec) do
-      clause('BOOLEAN') { |_| }
-      clause('CHAR')    { |_| }
-      clause('INT')     { |_| }
-      clause('STRING')  { |_| }
+      clause('BOOLEAN') { |_| Boolean.new 'bool'}
+      clause('CHAR')    { |_| Char.new 'char'}
+      clause('INT')     { |_| Int.new 'int'}
+      clause('STRING')  { |_| Str.new 'str'}
       clause('VOID')    { |_| }
     end
 
