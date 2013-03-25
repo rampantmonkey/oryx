@@ -57,5 +57,9 @@ module Oryx
     child :body, CodeBlock
   end
 
+  class While < Expression
+    child :condition, Expression
+    child :body, CodeBlock
+  end
 
 end
