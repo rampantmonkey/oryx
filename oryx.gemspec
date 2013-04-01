@@ -13,15 +13,12 @@ Gem::Specification.new do |gem|
   gem.homepage      = "http://github.com/rampantmonkey/oryx"
 
   gem.files         = `git ls-files`.split($/)
-  gem.files        += Dir['man/man?/*.?']
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) unless !f and f["markdown"]}
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
   gem.add_development_dependency 'rake', '~>0.9.2.2'
   gem.add_development_dependency 'shoulda', '~>3.3.2'
-  gem.add_development_dependency 'md2man', '~>1.4'
-  gem.add_development_dependency 'binman', '~>3.2.0'
 
   gem.add_dependency 'rltk', '~>2.2.1'
   gem.add_dependency 'colorize', '~>0.5.8'
