@@ -10,6 +10,7 @@ module Oryx
 
     def exit_scope
       raise "Cannot exit global scope." if current_scope == 0
+      values.pop
     end
 
     def lookup variable
