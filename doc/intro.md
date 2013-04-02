@@ -5,7 +5,8 @@
 # Goals
 
 - Produce tokens from source code (Oryx 0.1.1)
-- Create parse tree from token stream (Oryx 0.2.?)
+- Create parse tree from token stream (Oryx 0.2.1)
+- Symbol Table working (Oryx 0.2.7)
 - Translate parse tree into AST (Oryx ?.?.?)
 - Emit LLVM intermediate code by walking AST (Oryx ?.?.?)
 - Implement Semantic Analysis (Oryx ?.?.?)
