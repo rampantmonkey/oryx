@@ -5,9 +5,11 @@ module Oryx
     end
 
     def enter_scope
+      values.push Hash.new
     end
 
     def exit_scope
+      raise "Cannot exit global scope." if current_scope == 0
     end
 
     def lookup variable
