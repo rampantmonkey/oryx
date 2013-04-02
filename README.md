@@ -27,7 +27,8 @@ For more details try
     $ oryx -h
 
 ## See Also
-`bin/oryx.markdown`
+
+`doc/intro.md`
 
 
 ## Contributing
