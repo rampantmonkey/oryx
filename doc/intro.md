@@ -17,6 +17,7 @@
 # Table of Contents
 
 - [Introduction](intro.md)
+- [C-Flat](cflat.md)
 - [Tools Available](tools.md)
 - [Lexer](lexer.md)
 - [Parser](parser.md)
