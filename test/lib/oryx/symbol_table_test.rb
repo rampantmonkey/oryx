@@ -29,12 +29,13 @@ module Oryx
       end
     end
 
-    context "scope resolution" do
+    context "scope basics " do
       attr_accessor :st
 
       setup do
         @st = SymbolTable.new
-        {a: 1, b:2, c:3, d:4, e:'a', f: 1.2}.each{ |k, v| st.insert k, v }
+        @initial_values = {a: 1, b:2, c:3, d:4, e:'a', f: 1.2}
+        @initial_values.each{ |k, v| st.insert k, v }
       end
 
       should "increase the scope" do
@@ -67,6 +68,12 @@ module Oryx
           st.exit_scope
           assert_equal i, st.current_scope
         end
+      end
+
+      should "leave base values alone" do
+        st.enter_scope
+        st.exit_scope
+        @initial_values.each{ |k, v| assert_equal v, st.lookup(k) }
       end
     end
 
