@@ -75,6 +75,24 @@ module Oryx
         st.exit_scope
         @initial_values.each{ |k, v| assert_equal v, st.lookup(k) }
       end
+
+      should "find values from lower scope" do
+        st.enter_scope
+        @initial_values.each{ |k, v| assert_equal v, st.lookup(k) }
+      end
+
+      should "mask previously defined variables" do
+        st.enter_scope
+        st.insert :a,  "pi"
+        assert_equal "pi", st.lookup(:a)
+      end
+
+      should "not delete lower scoped values" do
+        st.enter_scope
+        st.insert :a, "pi"
+        st.exit_scope
+        assert_equal 1, st.lookup(:a)
+      end
     end
 
   end
