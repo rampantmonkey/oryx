@@ -93,7 +93,21 @@ module Oryx
         st.exit_scope
         assert_equal 1, st.lookup(:a)
       end
-    end
 
+      should "update variable" do
+        st.update :a, "5"
+        assert_equal "5", st.lookup(:a)
+      end
+
+      should "update variable in correct scope" do
+        st.enter_scope
+        st.insert :c, "cow"
+        st.update :c, "monkey"
+        assert_equal "monkey", st.lookup(:c)
+
+        st.exit_scope
+        assert_equal 3, st.lookup(:c)
+      end
+    end
   end
 end
