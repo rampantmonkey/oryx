@@ -14,12 +14,8 @@ module Oryx
     end
 
     def lookup variable
-
-      s = current_scope
-      while(s >= 0) do
-        v = lookup_in s, variable
-        return v unless v == :not_found
-        s -= 1
+      values.reverse.each do |v|
+        return v.fetch variable.to_sym if v.include? variable.to_sym
       end
     end
 
@@ -33,9 +29,5 @@ module Oryx
 
     private
       attr_accessor :values
-
-      def lookup_in scope, variable
-        values[scope].fetch variable.to_sym {:not_found}
-      end
   end
 end
