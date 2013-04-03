@@ -19,6 +19,11 @@ module Oryx
       end
     end
 
+    def update variable, value=nil
+      variable = variable.to_sym
+      values[-1][variable] = value if values.last.include? variable
+    end
+
     def insert variable, value=nil
       values[current_scope][variable.to_sym] = value
     end
