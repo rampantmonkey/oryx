@@ -2,6 +2,28 @@
 
 C-Flat is a working subset of C designed for use in compilers courses. C-Flat includes expressions, control flow, recursion, and strict type checking. This document will outline an **informal** description of the language, its features, and design decisions.
 
+## Keywords
+
+ - `boolean`
+ - `char`
+ - `else`
+ - `if`
+ - `int`
+ - `print`
+ - `return`
+ - `string`
+ - `true`
+ - `void`
+ - `while`
+
+## Identifiers
+
+Identifiers in C-Flat are identical to C. Identifiers may contain letters, numbers, and underscores and must begin with a letter or a number. Keywords are also not valid identifiers.
+
+## Whitespace
+
+C-Flat ignores whitespace (beyond separating identifiers).
+
 ## Operators
 
 C-Flat includes many of the arithmetic operators found in C. Here they are enumerated with precedence.
