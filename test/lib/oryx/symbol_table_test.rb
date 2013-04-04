@@ -102,6 +102,14 @@ module Oryx
         st.exit_scope
         assert_equal 3, st.lookup(:c)
       end
+
+      should "update variable in previous scope" do
+        st.enter_scope
+        st.update :c, 100
+        st.exit_scope
+
+        assert_equal 100, st.lookup(:c)
+      end
     end
 
     context "errors" do
