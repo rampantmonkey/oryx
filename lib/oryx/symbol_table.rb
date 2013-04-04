@@ -1,3 +1,5 @@
+require_relative '../oryx'
+
 module Oryx
   class SymbolTable
     def initialize
@@ -9,7 +11,7 @@ module Oryx
     end
 
     def exit_scope
-      raise "Cannot exit global scope." if current_scope == 0
+      raise SymbolTableError, "Cannot exit global scope." if current_scope == 0
       values.pop
     end
 
