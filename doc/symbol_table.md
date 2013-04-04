@@ -12,8 +12,12 @@ The 5 basic operations can be divided into two groups. `insert`, `update`, and `
 
 ### Hash Tables in Ruby
 
-As part of the language, Ruby provides a [`Hash` class](http://ruby-doc.org/core-2.0/Hash.html).
+As part of the language, Ruby provides a [`Hash` class](http://ruby-doc.org/core-2.0/Hash.html) which implements a hash table. `Hash` stores and retrieves objects by label. A label can be any object which implements the `==` (equality) operator, but the typical objects used for labels are [`String`](http://ruby-doc.org/core-2.0/String.html) and [`Symbol`](http://ruby-doc.org/core-2.0/Symbol.html). `String`s are, as expected, a list of characters. `Symbol`s can be viewed as strings with two important distinctions. `Symbol`s are __immutable__ and __globally__ scoped. `Symbol`s are implemented as a pointer to a memory object containing the name of the symbol, thus comparisons are extremely fast. All of these properties make `Symbol`s an ideal choice for storing values in a hash table.
 
 ### Stacks in Ruby
 
 Ruby does not provide a specific `stack` class, however the `push` and `pop` methods are implemented for the [`Array` class](http://ruby-doc.org/core-2.0/Array.html).
+
+## Bringing It Together
+
+Combining these data structures into a symbol table is straight forward. The symbol table is implemented as an `Array` of `Hash`es. The first `Hash` in the `Array` represents the global program scope while successive elements represent more localized scopes. When a function exits the last entry is removed from the `Array`, effectively destroying the values created inside of the scope.
