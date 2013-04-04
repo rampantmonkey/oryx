@@ -22,8 +22,8 @@ module Oryx
     end
 
     def update variable, value=nil
-      variable = variable.to_sym
-      values[-1][variable] = value if values.last.include? variable
+      level = scope_level_of variable
+      values[level][variable.to_sym] = value
     end
 
     def insert variable, value=nil
@@ -36,5 +36,11 @@ module Oryx
 
     private
       attr_accessor :values
+
+      def scope_level_of variable
+        values.reverse.each_with_index do |v, i|
+          return current_scope - i if v.include? variable.to_sym
+        end
+      end
   end
 end
