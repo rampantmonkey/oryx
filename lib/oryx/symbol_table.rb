@@ -16,9 +16,7 @@ module Oryx
     end
 
     def lookup variable
-      values.reverse.each do |v|
-        return v.fetch variable.to_sym if v.include? variable.to_sym
-      end
+      return values[scope_level_of variable][variable.to_sym]
     end
 
     def update variable, value=nil
@@ -27,6 +25,8 @@ module Oryx
     end
 
     def insert variable, value=nil
+      raise SymbolTableError, "Re-definition of #{variable} not allowed" if values.last.include? variable.to_sym
+
       values[current_scope][variable.to_sym] = value
     end
 
@@ -41,6 +41,8 @@ module Oryx
         values.reverse.each_with_index do |v, i|
           return current_scope - i if v.include? variable.to_sym
         end
+
+        raise SymbolTableError, "Variable #{variable} not found in symbol table."
       end
   end
 end
