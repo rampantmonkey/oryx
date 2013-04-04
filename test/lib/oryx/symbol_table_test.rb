@@ -43,12 +43,6 @@ module Oryx
         assert_equal 1, st.current_scope
       end
 
-      should "raise an exception when exiting global scope" do
-        assert_raise RuntimeError do
-          st.exit_scope
-        end
-      end
-
       should "decrease the scope" do
         st.enter_scope
         assert_nothing_raised do
@@ -108,6 +102,20 @@ module Oryx
         st.exit_scope
         assert_equal 3, st.lookup(:c)
       end
+    end
+
+    context "errors" do
+      setup do
+        @st = SymbolTable.new
+      end
+
+      should "raise an exception when exiting global scope" do
+        assert_raise SymbolTableError do
+          st.exit_scope
+        end
+      end
+
+
     end
   end
 end
