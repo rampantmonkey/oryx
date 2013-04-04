@@ -123,6 +123,24 @@ module Oryx
         end
       end
 
+      should "raise an error if variable is not found" do
+        assert_raise SymbolTableError do
+          st.lookup :a
+        end
+      end
+
+      should "raise an error if re-inserting variable" do
+        st.insert :a
+        assert_raise SymbolTableError do
+          st.insert :a
+        end
+      end
+
+      should "raise an error if updating non-existant variable" do
+        assert_raise SymbolTableError do
+          st.update :a
+        end
+      end
 
     end
   end
