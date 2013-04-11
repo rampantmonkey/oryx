@@ -25,53 +25,53 @@ My familiarity with Ruby re-enforced the choice of language.
 
 # Program Flow
 
-#####################
-#                   #
-#      source       #
-#                   #
-#####################
-         |
-         | Character by character
-         |
-         V
-#####################
-#                   #
-#      lexer        #
-#                   #
-#####################
-         |
-         | Token Stream
-         |
-         V
-#####################
-#                   #
-#      parser       #
-#                   #
-#####################
-         |
-         | Abstract Syntax Tree
-         |
-         V
-#####################
-#                   #
-#     semantic      #
-#     analysis      #
-#                   #
-#####################
-         |
-         | Verified Syntax Tree
-         |
-         V
-#####################
-#                   #
-#       code        #
-#    generation     #
-#                   #
-#####################
-         |
-         | Executable (via LLVM)
-         |
-         V
+    #####################
+    #                   #
+    #      source       #
+    #                   #
+    #####################
+             |
+             | Character by character
+             |
+             V
+    #####################
+    #                   #
+    #      lexer        #
+    #                   #
+    #####################
+             |
+             | Token Stream
+             |
+             V
+    #####################
+    #                   #
+    #      parser       #
+    #                   #
+    #####################
+             |
+             | Abstract Syntax Tree
+             |
+             V
+    #####################
+    #                   #
+    #     semantic      #
+    #     analysis      #
+    #                   #
+    #####################
+             |
+             | Verified Syntax Tree
+             |
+             V
+    #####################
+    #                   #
+    #       code        #
+    #    generation     #
+    #                   #
+    #####################
+             |
+             | Executable (via LLVM)
+             |
+             V
 
 
 # Table of Contents
