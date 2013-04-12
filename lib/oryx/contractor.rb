@@ -33,6 +33,10 @@ module Oryx
       puts "#{node.type} #{node.name}"
     end
 
+    on CodeBlock do |node|
+      node.statements.each {|s| visit s}
+    end
+
     on Return do |node|
       result = visit node.right
       puts "RETURN: #{result}"
