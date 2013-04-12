@@ -47,7 +47,16 @@ module Oryx
       right = visit node.right
 
       case node
-      when Add then puts "ADD: #{left} + #{right} = #{left+right}"
+      when Add then puts "ADD: #{left} + #{right} --> #{left + right}"
+      when Sub then puts "SUB: #{left} - #{right} --> #{left - right}"
+      when Mul then puts "MUL: #{left} * #{right} --> #{left * right}"
+      when Div then puts "DIV: #{left} / #{right} --> #{left / right}"
+      when GE  then puts "GE: #{left} > #{right} --> #{left > right}"
+      when GEQ then puts "GEQ: #{left} >= #{right} --> #{left >= right}"
+      when LE  then puts "LE: #{left} < #{right} --> #{left < right}"
+      when LEQ then puts "LEQ: #{left} <= #{right} --> #{left <= right}"
+      when EQ  then puts "EQ: #{left} == #{right} --> #{left == right}"
+      when NEQ then puts "NEQ: #{left} != #{right} --> #{left != right}"
       end
     end
 
