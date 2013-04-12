@@ -53,7 +53,7 @@ module Oryx
   end
 
   class ParamList < RLTK::ASTNode
-    child :params, [Expression]
+    child :params, [Variable]
   end
 
   class Function < RLTK::ASTNode
