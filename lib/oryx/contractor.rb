@@ -42,6 +42,19 @@ module Oryx
       puts "RETURN: #{result}"
     end
 
+    on Binary do |node|
+      left = visit node.left
+      right = visit node.right
+
+      case node
+      when Add then puts "ADD: #{left} + #{right} = #{left+right}"
+      end
+    end
+
+    on Number do |node|
+      node.value
+    end
+
 
     private
       def dispatch node
