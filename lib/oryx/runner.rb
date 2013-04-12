@@ -25,6 +25,9 @@ module Oryx
       c = Contractor.new
       c.begin ast
 
+      c.module.verify
+      c.module.dump
+
     end
 
     private
