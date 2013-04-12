@@ -23,6 +23,16 @@ module Oryx
     end
 
     on Function do |node|
+      if fun = @module.functions[node.i]
+        raise GenerationError, "Redefinition of function #{node.i}."
+      else
+        param_types = visit node.params
+        return_type = visit node.return_type
+        puts param_types
+        puts return_type
+        fun = @module.functions.add(node.i, return_type, param_types)
+      end
+
       st.enter_scope
       puts "FUNCTION: #{node.return_type} #{node.i}"
       node.params.params.each {|p| visit p}
