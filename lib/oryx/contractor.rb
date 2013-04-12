@@ -33,14 +33,26 @@ module Oryx
         fun = @module.functions.add(node.i, return_type, param_types)
       end
 
+
       st.enter_scope
-      puts "FUNCTION: #{node.return_type} #{node.i}"
+      puts "FUNCTION: #{visit node.return_type} #{node.i}"
       node.params.params.each {|p| visit p}
       visit node.body
+      st.exit_scope
+    end
+
+    on ParamList do |node|
+      node.params.map do |p|
+        t = visit p.type
+      end
+    end
+
+    on Int do |node|
+      RLTK::CG::NativeIntType
     end
 
     on Variable do |node|
-      puts "#{node.type} #{node.name}"
+      puts "#{visit node.type} #{node.name}"
     end
 
     on CodeBlock do |node|
