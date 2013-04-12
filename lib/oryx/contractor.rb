@@ -24,9 +24,9 @@ module Oryx
 
     on Function do |node|
       st.enter_scope
-      puts node.i
+      puts "FUNCTION: #{node.return_type} #{node.i}"
       node.params.params.each {|p| visit p}
-      puts node.body, node.return_type
+      visit node.body
     end
 
     on Variable do |node|
