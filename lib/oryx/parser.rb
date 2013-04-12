@@ -35,7 +35,7 @@ module Oryx
     end
 
     production(:fdecl) do
-      clause('type_spec IDENT LPAREN opt_param_list RPAREN code_block') { |t, i, _, opl,  _, c| Function.new i, opl, c }
+      clause('type_spec IDENT LPAREN opt_param_list RPAREN code_block') { |t, i, _, opl,  _, c| Function.new i, opl, c, t }
     end
 
     production(:opt_param_list) do
@@ -49,7 +49,7 @@ module Oryx
     end
 
     production(:param) do
-      clause('type_spec IDENT') { |t, i| Variable.new i }
+      clause('type_spec IDENT') { |t, i| Variable.new i, t }
     end
 
     production(:constant) do
