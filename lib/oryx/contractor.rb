@@ -33,6 +33,11 @@ module Oryx
       puts "#{node.type} #{node.name}"
     end
 
+    on Return do |node|
+      result = visit node.right
+      puts "RETURN: #{result}"
+    end
+
 
     private
       def dispatch node
