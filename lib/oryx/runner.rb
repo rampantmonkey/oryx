@@ -27,6 +27,7 @@ module Oryx
 
       output_ir c.module
 
+      translate_to_assembly
     end
 
     private
@@ -44,12 +45,20 @@ module Oryx
         s
       end
 
+      def base_name
+        input_filename.to_s.split('.').first
+      end
+
       def output_ir ir_module
         ir_module.verify
         orig_stderr = $stderr.clone
-        $stderr.reopen File.new("#{input_filename.to_s.split('.').first}.ll", "w")
+        $stderr.reopen File.new("#{base_name}.ll", "w")
         ir_module.dump
         $stderr.reopen orig_stderr
+      end
+
+      def translate_to_assembly
+        `llc -disable-cfi #{base_name}.ll`
       end
 
       def table_header
