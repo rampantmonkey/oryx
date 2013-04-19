@@ -1,12 +1,22 @@
+---
 language: ruby
 rvm:
-  - "1.9.3"
-  - "2.0.0"
+- 1.9.3
 before_script:
-  - wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz
-  - tar -xzf llvm-3.0.tar.gz
-  - cd llvm-3.0.src
-  - ./configure --enable-shared --enable-jit CC=gcc CXX=g++
-  - make -j 4
-  - make install
+- gem install travis-artifacts
+- wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz
+- tar -xzf llvm-3.0.tar.gz
+- cd llvm-3.0.src
+- ./configure --enable-shared --enable-jit CC=gcc CXX=g++ --prefix=/home/travis/build/rampantmonkey/oryx/llvm-shared
+- make -j 4
+- make install
+- cd ../
+- tar -czf llvm-cmpl-3.0.tar.gz llvm-shared
+- travis-artifacts upload --path llvm-cmpl-3.0.tar.gz
 script: wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz; bundle exec rake
+env:
+  global:
+  - "ARTIFACTS_AWS_REGION=us-east-1"
+  - "ARTIFACTS_S3_BUCKET=oryx-artifacts"
+  - secure: "lIqFPSOg8pq/x/I55RRBD749/2ASnnBrf7trG+y1q2wu5SOEcYWHPGn+QvyzFL0q67c/Qnz1MYtn6GJOZXPnAWZrZOtlw9QgIkrk6NquiyUMfR6qQA79lMo79okyFxeyK7uedvVbCBxPgJK3CA2IcKIMmWkOU+LLvnTCl2veqh8="
+  - secure: "HN9A0olMrWO8TTmAEN7fg3qtJp08JqabIKVgujLWw+JHVRGqh9MBF9j5ra1WhdV3n7myi+A0v38Fe7T7Mi0gRd+OAp/eCLg2prO2/ZpobWduY5k22XwR0uujsPmv9W4EQalhauWx4kmAu/9rjPcO5Voe5mcvHoFK5xun1571vjM="
