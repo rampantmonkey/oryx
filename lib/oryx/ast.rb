@@ -21,10 +21,13 @@ module Oryx
     child :right, Expression
   end
 
-  class Assign < Expression
+  class Initialization < Expression
     value :name, String
     child :right, Expression
+    child :type, Type
   end
+
+  class GInitialization < Initialization; end
 
   class Add < Binary; end
   class Sub < Binary; end

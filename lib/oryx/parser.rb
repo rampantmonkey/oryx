@@ -31,7 +31,7 @@ module Oryx
     end
 
     production(:vinit) do
-      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| Assign.new i, c}
+      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| GInitialization.new i, c, t }
     end
 
     production(:fdecl) do

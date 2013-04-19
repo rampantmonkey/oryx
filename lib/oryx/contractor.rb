@@ -53,8 +53,11 @@ module Oryx
     end
 
     on Variable do |node|
-      st.insert(node.name)
-      puts "#{visit node.type} #{node.name}"
+      begin
+        st.lookup node.name.to_sym
+      rescue SymbolTableError => e
+        puts e.message, "Attempting to continue without this value."
+      end
     end
 
     on CodeBlock do |node|
@@ -64,7 +67,6 @@ module Oryx
 
     on Return do |node|
       result = visit node.right
-      puts "RETURN: #{result}"
       result
     end
 
@@ -87,7 +89,18 @@ module Oryx
     end
 
     on Number do |node|
+      puts "A"
       RLTK::CG::NativeInt.new(node.value)
+    end
+
+    on GInitialization do |node|
+      name = node.name.to_sym
+      value = visit node.right
+      begin
+        @st.insert(name, value)
+      rescue SymbolTableError => e
+        STDERR.puts e.message, "Continuing processing without modifying the symbol table"
+      end
     end
 
 
@@ -95,6 +108,7 @@ module Oryx
       def dispatch node
         case node
         when Function then visit node
+        when GInitialization then visit node
         else raise GenerationError "Unhandled node type #{node}"
         end
       end
