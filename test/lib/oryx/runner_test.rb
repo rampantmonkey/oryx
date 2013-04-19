@@ -6,6 +6,7 @@ module Oryx
       should_generate_toolchain_output("return", 42)
       should_generate_toolchain_output("add", 12)
       should_generate_toolchain_output("sub", (-7)%256)
+      should_generate_toolchain_output("mul", 175)
     end
   end
 end

@@ -75,7 +75,7 @@ module Oryx
       case node
       when Add then add(left, right, 'addtmp')
       when Sub then sub(left, right, 'subtmp')
-      when Mul then puts "MUL: #{left} * #{right} --> #{left * right}"
+      when Mul then mul(left, right, 'multmp')
       when Div then puts "DIV: #{left} / #{right} --> #{left / right}"
       when GE  then puts "GE: #{left} > #{right} --> #{left > right}"
       when GEQ then puts "GEQ: #{left} >= #{right} --> #{left >= right}"
