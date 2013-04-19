@@ -9,6 +9,7 @@ module Oryx
       should_generate_toolchain_output("mul", 175)
       should_generate_toolchain_output("div", 2)
       should_generate_toolchain_output("gvar_1", 7)
+      should_generate_toolchain_output("gvar_2", 42)
     end
   end
 end
