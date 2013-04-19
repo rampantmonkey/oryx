@@ -5,10 +5,7 @@ rvm:
 before_script:
 - "wget https://s3.amazonaws.com/oryx-artifacts/artifacts/40/40.1/llvm-cmpl-3.0.tar.gz"
 - tar -xzf llvm-cmpl-3.0.tar.gz
-- "export LD_PATH=/home/travis/build/rampantmonkey/oryx/llvm-shared/lib:$LD_PATH"
-- "echo $LD_PATH"
 - "export LD_LIBRARY_PATH=/home/travis/build/rampantmonkey/oryx/llvm-shared/lib:$LD_LIBRARY_PATH"
-- "echo $LD_LIBRARY_PATH"
 
 script: bundle exec rake
 env:
