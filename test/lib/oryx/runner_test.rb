@@ -7,6 +7,7 @@ module Oryx
       should_generate_toolchain_output("add", 12)
       should_generate_toolchain_output("sub", (-7)%256)
       should_generate_toolchain_output("mul", 175)
+      should_generate_toolchain_output("div", 2)
     end
   end
 end

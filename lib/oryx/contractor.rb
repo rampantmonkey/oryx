@@ -76,7 +76,7 @@ module Oryx
       when Add then add(left, right, 'addtmp')
       when Sub then sub(left, right, 'subtmp')
       when Mul then mul(left, right, 'multmp')
-      when Div then puts "DIV: #{left} / #{right} --> #{left / right}"
+      when Div then sdiv(left, right, 'divtmp')
       when GE  then puts "GE: #{left} > #{right} --> #{left > right}"
       when GEQ then puts "GEQ: #{left} >= #{right} --> #{left >= right}"
       when LE  then puts "LE: #{left} < #{right} --> #{left < right}"
