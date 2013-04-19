@@ -29,6 +29,18 @@ module Oryx
 
   class GInitialization < Initialization; end
 
+  class Declaration < Expression
+    value :name, String
+    child :type, Type
+  end
+
+  class GDeclaration < Declaration; end
+
+  class Assign < Expression
+    value :name, String
+    child :right, Expression
+  end
+
   class Add < Binary; end
   class Sub < Binary; end
   class Mul < Binary; end

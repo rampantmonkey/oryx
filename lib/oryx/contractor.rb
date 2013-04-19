@@ -17,8 +17,6 @@ module Oryx
     end
 
     def begin ast
-      puts ast.length
-      puts ast.class
       ast.each {|a| dispatch a}
     end
 
@@ -56,7 +54,7 @@ module Oryx
       begin
         st.lookup node.name.to_sym
       rescue SymbolTableError => e
-        puts e.message, "Attempting to continue without this value."
+        STDERR.puts e.message, "Attempting to continue without this value."
       end
     end
 
@@ -79,7 +77,7 @@ module Oryx
       when Sub then sub(left, right, 'subtmp')
       when Mul then mul(left, right, 'multmp')
       when Div then sdiv(left, right, 'divtmp')
-      when GE  then puts "GE: #{left} > #{right} --> #{left > right}"
+      when GE  then icmp(:sgt, left, right)
       when GEQ then puts "GEQ: #{left} >= #{right} --> #{left >= right}"
       when LE  then puts "LE: #{left} < #{right} --> #{left < right}"
       when LEQ then puts "LEQ: #{left} <= #{right} --> #{left <= right}"
@@ -89,7 +87,6 @@ module Oryx
     end
 
     on Number do |node|
-      puts "A"
       RLTK::CG::NativeInt.new(node.value)
     end
 
@@ -97,9 +94,28 @@ module Oryx
       name = node.name.to_sym
       value = visit node.right
       begin
-        @st.insert(name, value)
+        st.insert(name, value)
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing without modifying the symbol table"
+      end
+    end
+
+    on GDeclaration do |node|
+      name = node.name.to_sym
+      begin
+        st.insert name
+      rescue SymbolTableError => e
+        STDERR.puts e.message, "Continuing processing without modifying the symbol table"
+      end
+    end
+
+    on Assign do |node|
+      value = visit node.right
+      name = node.name.to_sym
+      begin
+        st.update name, value
+      rescue SymbolTableError => e
+        STDERR.puts e.message, "Continuing processing witout modifying the symbol table"
       end
     end
 
@@ -109,6 +125,7 @@ module Oryx
         case node
         when Function then visit node
         when GInitialization then visit node
+        when GDeclaration then visit node
         else raise GenerationError "Unhandled node type #{node}"
         end
       end

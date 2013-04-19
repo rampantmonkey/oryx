@@ -27,7 +27,7 @@ module Oryx
     end
 
     production(:vdecl) do
-      clause('type_spec IDENT SEMI') { |t, i, _| Variable.new i}
+      clause('type_spec IDENT SEMI') { |t, i, _| GDeclaration.new i, t}
     end
 
     production(:vinit) do
