@@ -28,6 +28,8 @@ module Oryx
       output_ir c.module
 
       translate_to_assembly
+      create_executable
+
     end
 
     private
@@ -59,6 +61,10 @@ module Oryx
 
       def translate_to_assembly
         `llc -disable-cfi #{base_name}.ll`
+      end
+
+      def create_executable
+        `gcc #{base_name}.s -o #{base_name}.out`
       end
 
       def table_header
