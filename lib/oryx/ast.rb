@@ -41,6 +41,15 @@ module Oryx
     child :right, Expression
   end
 
+  class ParamList < RLTK::ASTNode
+    child :params, [Variable]
+  end
+
+  class Call < Expression
+    value :name, String
+    child :params,  ParamList
+  end
+
   class Add < Binary; end
   class Sub < Binary; end
   class Mul < Binary; end
@@ -65,10 +74,6 @@ module Oryx
 
   class CodeBlock < Expression
     child :statements, [Expression]
-  end
-
-  class ParamList < RLTK::ASTNode
-    child :params, [Variable]
   end
 
   class Function < RLTK::ASTNode

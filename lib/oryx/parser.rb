@@ -109,6 +109,7 @@ module Oryx
 
       clause('RETURN e')  { |_, e| Return.new e }
 
+      clause('IDENT LPAREN opt_param_list RPAREN') { |i, _, opl, _| Call.new(i, opl) }
     end
 
     finalize explain: 'explain.out'

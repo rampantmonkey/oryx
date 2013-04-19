@@ -119,6 +119,13 @@ module Oryx
       end
     end
 
+    on Call do |node|
+      callee = @module.functions[node.name]
+      raise GenerationError, "Unknown function referenced" unless callee
+
+      call callee
+    end
+
 
     private
       def dispatch node
@@ -126,6 +133,7 @@ module Oryx
         when Function then visit node
         when GInitialization then visit node
         when GDeclaration then visit node
+        when Call then visit node
         else raise GenerationError "Unhandled node type #{node}"
         end
       end
