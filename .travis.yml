@@ -2,4 +2,11 @@ language: ruby
 rvm:
   - "1.9.3"
   - "2.0.0"
-script: bundle exec rake
+before_script:
+  - wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz
+  - tar -xzf llvm-3.0.tar.gz
+  - cd llvm-3.0.src
+  - ./configure --enable-shared
+  - make -j 4
+  - make install
+script: wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz; bundle exec rake
