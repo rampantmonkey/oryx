@@ -25,8 +25,7 @@ module Oryx
       c = Contractor.new
       c.begin ast
 
-      c.module.verify
-      c.module.dump
+      output_ir c.module
 
     end
 
@@ -43,6 +42,14 @@ module Oryx
           s += line + "\n"
         end
         s
+      end
+
+      def output_ir ir_module
+        ir_module.verify
+        orig_stderr = $stderr.clone
+        $stderr.reopen File.new("#{input_filename.to_s.split('.').first}.ll", "w")
+        ir_module.dump
+        $stderr.reopen orig_stderr
       end
 
       def table_header
