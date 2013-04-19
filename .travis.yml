@@ -4,16 +4,10 @@ rvm:
 - 1.9.3
 before_script:
 - gem install travis-artifacts
-- wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz
-- tar -xzf llvm-3.0.tar.gz
-- cd llvm-3.0.src
-- ./configure --enable-shared --enable-jit CC=gcc CXX=g++ --prefix=/home/travis/build/rampantmonkey/oryx/llvm-shared
-- make -j 4
-- make install
-- cd ../
-- tar -czf llvm-cmpl-3.0.tar.gz llvm-shared
-- travis-artifacts upload --path llvm-cmpl-3.0.tar.gz
-script: wget http://llvm.org/releases/3.0/llvm-3.0.tar.gz; bundle exec rake
+- "wget https://s3.amazonaws.com/oryx-artifacts/artifacts/40/40.1/llvm-cmpl-3.0.tar.gz"
+- tar -xzf llvm-cmpl-3.0.tar.gz
+- "export LD_PATH=/home/travis/build/rampantmonkey/oryx/llvm-shared/lib:$LD_PATH"
+script: bundle exec rake
 env:
   global:
   - "ARTIFACTS_AWS_REGION=us-east-1"
