@@ -73,7 +73,7 @@ module Oryx
       right = visit node.right
 
       case node
-      when Add then fadd(left, right, 'addtmp')
+      when Add then add(left, right, 'addtmp')
       when Sub then puts "SUB: #{left} - #{right} --> #{left - right}"
       when Mul then puts "MUL: #{left} * #{right} --> #{left * right}"
       when Div then puts "DIV: #{left} / #{right} --> #{left / right}"
