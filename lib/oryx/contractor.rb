@@ -7,6 +7,9 @@ require "rltk/cg/module"
 RLTK::CG::LLVM.init(:x86)
 
 module Oryx
+
+  ZERO = RLTK::CG::NativeInt.new(0)
+
   class Contractor < RLTK::CG::Contractor
     attr_reader :module, :st
 
@@ -77,12 +80,12 @@ module Oryx
       when Sub then sub(left, right, 'subtmp')
       when Mul then mul(left, right, 'multmp')
       when Div then sdiv(left, right, 'divtmp')
-      when GE  then icmp(:sgt, left, right)
       when GEQ then puts "GEQ: #{left} >= #{right} --> #{left >= right}"
       when LE  then puts "LE: #{left} < #{right} --> #{left < right}"
       when LEQ then puts "LEQ: #{left} <= #{right} --> #{left <= right}"
       when EQ  then puts "EQ: #{left} == #{right} --> #{left == right}"
       when NEQ then puts "NEQ: #{left} != #{right} --> #{left != right}"
+      when GE  then integer_cast(icmp(:sgt, left, right), RLTK::CG::NativeIntType, 'booltmp')
       end
     end
 
@@ -124,6 +127,25 @@ module Oryx
       raise GenerationError, "Unknown function referenced" unless callee
 
       call callee
+    end
+
+    on If do |node|
+      cond_val = icmp :ne, (visit node.cond), ZERO, 'ifcond'
+      start_bb = current_block
+      fun = start_bb.parent
+      then_bb = fun.blocks.append('then')
+      then_val, new_then_bb = visit node.then, at: then_bb, rcb: true
+
+      else_bb = fun.blocks.append('else')
+      else_val, new_else_bb = visit node.else, at: else_bb, rcb: true
+
+      merge_bb = fun.blocks.append('merge', self)
+      phi_inst = build(merge_bb) { phi RLTK::CG::NativeIntType, {new_then_bb => then_val, new_else_bb => else_val}, 'iftmp' }
+
+      build(start_bb) { cond cond_val, then_bb, else_bb }
+      build(new_then_bb) { br merge_bb }
+      build(new_else_bb) { br merge_bb }
+      returning(phi_inst) { target merge_bb }
     end
 
 
