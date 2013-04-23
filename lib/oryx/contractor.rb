@@ -80,12 +80,12 @@ module Oryx
       when Sub then sub(left, right, 'subtmp')
       when Mul then mul(left, right, 'multmp')
       when Div then sdiv(left, right, 'divtmp')
-      when NEQ then puts "NEQ: #{left} != #{right} --> #{left != right}"
       when GE  then integer_cast(icmp(:sgt, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when GEQ then integer_cast(icmp(:sge, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when LE  then integer_cast(icmp(:slt, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when LEQ then integer_cast(icmp(:sle, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when EQ  then integer_cast(icmp(:eq, left, right), RLTK::CG::NativeIntType, 'booltmp')
+      when NEQ then integer_cast(icmp(:ne, left, right), RLTK::CG::NativeIntType, 'booltmp')
       end
     end
 
