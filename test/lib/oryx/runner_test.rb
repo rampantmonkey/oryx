@@ -13,6 +13,7 @@ module Oryx
       should_generate_toolchain_output("gvar_3", 15)
       should_generate_toolchain_output("fun_1", 9)
       should_generate_toolchain_output("ge", 7)
+      should_generate_toolchain_output("geq", 9)
     end
   end
 end
