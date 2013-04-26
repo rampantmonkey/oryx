@@ -7,8 +7,13 @@ module Oryx
     value :value, Integer
   end
 
+  class Type < Expression
+    value :t, String
+  end
+
   class Variable < Expression
     value :name, String
+    child :type, Type
   end
 
   class Binary < Expression
@@ -16,9 +21,37 @@ module Oryx
     child :right, Expression
   end
 
+  class Initialization < Expression
+    value :name, String
+    child :right, Expression
+    child :type, Type
+  end
+
+  class GInitialization < Initialization; end
+
+  class Declaration < Expression
+    value :name, String
+    child :type, Type
+  end
+
+  class GDeclaration < Declaration; end
+
   class Assign < Expression
     value :name, String
     child :right, Expression
+  end
+
+  class ParamList < RLTK::ASTNode
+    child :params, [Declaration]
+  end
+
+  class ArgList < RLTK::ASTNode
+    child :args, [Expression]
+  end
+
+  class Call < Expression
+    value :name, String
+    child :args, ArgList
   end
 
   class Add < Binary; end
@@ -47,23 +80,16 @@ module Oryx
     child :statements, [Expression]
   end
 
-  class ParamList < RLTK::ASTNode
-    child :params, [Expression]
-  end
-
   class Function < RLTK::ASTNode
     value :i, String
     child :params, ParamList
     child :body, CodeBlock
+    child :return_type, Type
   end
 
   class While < Expression
     child :condition, Expression
     child :body, CodeBlock
-  end
-
-  class Type < Expression
-    value :t, String
   end
 
   class Boolean < Type; end

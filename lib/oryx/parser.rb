@@ -27,15 +27,15 @@ module Oryx
     end
 
     production(:vdecl) do
-      clause('type_spec IDENT SEMI') { |t, i, _| Variable.new i}
+      clause('type_spec IDENT SEMI') { |t, i, _| GDeclaration.new i, t}
     end
 
     production(:vinit) do
-      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| Assign.new i, c}
+      clause('type_spec IDENT ASSIGN constant SEMI') { |t, i, _, c, _| GInitialization.new i, c, t }
     end
 
     production(:fdecl) do
-      clause('type_spec IDENT LPAREN opt_param_list RPAREN code_block') { |t, i, _, opl,  _, c| Function.new i, opl, c }
+      clause('type_spec IDENT LPAREN opt_param_list RPAREN code_block') { |t, i, _, opl,  _, c| Function.new i, opl, c, t }
     end
 
     production(:opt_param_list) do
@@ -49,7 +49,21 @@ module Oryx
     end
 
     production(:param) do
-      clause('type_spec IDENT') { |t, i| Variable.new i }
+      clause('type_spec IDENT') { |t, i| Declaration.new i, t }
+    end
+
+    production(:opt_arg_list) do
+      clause('') { || ArgList.new [] }
+      clause('arg_list') { |al| ArgList.new al}
+    end
+
+    production(:arg_list) do
+      clause('arg') { |a| [a] }
+      clause('arg COMMA arg_list') { |a, _, al| Array(a) + al }
+    end
+
+    production(:arg) do
+      clause('e') { |e| e }
     end
 
     production(:constant) do
@@ -80,12 +94,17 @@ module Oryx
       clause('e SEMI') { |e, _| e }
       clause('if_statement') { |i| i}
       clause('WHILE LPAREN e RPAREN code_block') {|_,_,e,_,c| While.new(e,c) }
+      clause('type_spec IDENT ASSIGN e SEMI')         { |t, e0, _, e1, _| Initialization.new t, e0, e1 }
+      clause('type_spec IDENT SEMI')                  { |t, i, _ | Declaration.new i,t }
     end
 
     production(:if_statement) do
-      clause('IF LPAREN e RPAREN statement') { |_, _, e, _, s| If.new(e, s, nil) }
+      clause('IF LPAREN e RPAREN statement')  { |_, _, e, _, s| If.new(e, s, nil) }
+      clause('IF LPAREN e RPAREN code_block') { |_, _, e, _, c| If.new(e, c, nil) }
       clause('IF LPAREN e RPAREN statement ELSE statement') { |_,_,e,_,ts,_,fs| If.new(e, ts, fs) }
       clause('IF LPAREN e RPAREN code_block ELSE code_block') {|_,_,e,_,tc,_,fc| If.new(e, tc, fc) }
+      clause('IF LPAREN e RPAREN statement ELSE code_block') {|_,_,e,_,ts,_,fc| If.new(e, ts, fc) }
+      clause('IF LPAREN e RPAREN code_block ELSE statement') {|_,_,e,_,tc,_,fs| If.new(e, tc, fs) }
     end
 
     production(:e) do
@@ -109,6 +128,7 @@ module Oryx
 
       clause('RETURN e')  { |_, e| Return.new e }
 
+      clause('IDENT LPAREN opt_arg_list RPAREN') { |i, _, oal, _| Call.new(i, oal) }
     end
 
     finalize explain: 'explain.out'

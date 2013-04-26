@@ -20,7 +20,16 @@ module Oryx
       puts "complete".green
 
       p = Parser.new
-      p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot', verbose: 'parse.out')
+      ast = p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot', verbose: 'parse.out')
+
+      c = Contractor.new
+      c.begin ast
+
+      output_ir c.module
+
+      translate_to_assembly
+      create_executable
+
     end
 
     private
@@ -36,6 +45,26 @@ module Oryx
           s += line + "\n"
         end
         s
+      end
+
+      def base_name
+        input_filename.to_s.split('.').first
+      end
+
+      def output_ir ir_module
+        ir_module.verify
+        orig_stderr = $stderr.clone
+        $stderr.reopen File.new("#{base_name}.ll", "w")
+        ir_module.dump
+        $stderr.reopen orig_stderr
+      end
+
+      def translate_to_assembly
+        `llc -disable-cfi #{base_name}.ll`
+      end
+
+      def create_executable
+        `gcc #{base_name}.s -o #{base_name}.out`
       end
 
       def table_header
