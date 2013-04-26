@@ -49,7 +49,21 @@ module Oryx
     end
 
     production(:param) do
-      clause('type_spec IDENT') { |t, i| Variable.new i, t }
+      clause('type_spec IDENT') { |t, i| Declaration.new i, t }
+    end
+
+    production(:opt_arg_list) do
+      clause('') { || ArgList.new [] }
+      clause('arg_list') { |al| ArgList.new al}
+    end
+
+    production(:arg_list) do
+      clause('arg') { |a| [a] }
+      clause('arg COMMA arg_list') { |a, _, al| Array(a) + al }
+    end
+
+    production(:arg) do
+      clause('e') { |e| e }
     end
 
     production(:constant) do
@@ -114,7 +128,7 @@ module Oryx
 
       clause('RETURN e')  { |_, e| Return.new e }
 
-      clause('IDENT LPAREN opt_param_list RPAREN') { |i, _, opl, _| Call.new(i, opl) }
+      clause('IDENT LPAREN opt_arg_list RPAREN') { |i, _, oal, _| Call.new(i, oal) }
     end
 
     finalize explain: 'explain.out'

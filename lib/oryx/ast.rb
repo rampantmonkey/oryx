@@ -42,12 +42,16 @@ module Oryx
   end
 
   class ParamList < RLTK::ASTNode
-    child :params, [Variable]
+    child :params, [Declaration]
+  end
+
+  class ArgList < RLTK::ASTNode
+    child :args, [Expression]
   end
 
   class Call < Expression
     value :name, String
-    child :params,  ParamList
+    child :args, ArgList
   end
 
   class Add < Binary; end
