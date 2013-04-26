@@ -28,18 +28,17 @@ module Oryx
       if fun = @module.functions[node.i]
         raise GenerationError, "Redefinition of function #{node.i}."
       else
+        st.enter_scope
         param_types = parameter_types node.params
         return_type = visit node.return_type
-        puts param_types
-        puts return_type
         fun = @module.functions.add(node.i, return_type, param_types)
+        node.params.params.each {|p| visit p}
+        param_names = parameter_names node.params
+        param_names.each_with_index do |name, i|
+          st.update name.to_sym, fun.params[i]
+        end
       end
 
-      puts "FUNCTION: #{visit node.return_type} #{node.i}"
-
-      st.enter_scope
-      node.params.params.each {|p| visit p}
-      puts fun
       ret (visit node.body, at: fun.blocks.append('entry'))
       st.exit_scope
 
@@ -112,6 +111,15 @@ module Oryx
       end
     end
 
+    on Declaration do |node|
+      name = node.name.to_sym
+      begin
+        st.insert name
+      rescue SymbolTableError => e
+        STDERR.puts e.message, "Continuing processing without modifying the symbol table"
+      end
+    end
+
     on Assign do |node|
       value = visit node.right
       name = node.name.to_sym
@@ -126,7 +134,9 @@ module Oryx
       callee = @module.functions[node.name]
       raise GenerationError, "Unknown function referenced" unless callee
 
-      call callee
+      raise GenerationError, "Function #{node.name} expected #{callee.params.size} argument(s) but was called with #{node.args.args.length}." unless callee.params.size == node.args.args.length
+      args = node.args.args.map { |a| visit a }
+      call callee, *args.push('calltmp')
     end
 
     on If do |node|
@@ -163,6 +173,12 @@ module Oryx
       def parameter_types node
         node.params.map do |p|
           t = visit p.type
+        end
+      end
+
+      def parameter_names node
+        node.params.map do |p|
+          t = p.name
         end
       end
   end
