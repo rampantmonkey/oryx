@@ -99,12 +99,16 @@ module Oryx
     end
 
     production(:if_statement) do
-      clause('IF LPAREN e RPAREN statement')  { |_, _, e, _, s| If.new(e, s, nil) }
-      clause('IF LPAREN e RPAREN code_block') { |_, _, e, _, c| If.new(e, c, nil) }
-      clause('IF LPAREN e RPAREN statement ELSE statement') { |_,_,e,_,ts,_,fs| If.new(e, ts, fs) }
-      clause('IF LPAREN e RPAREN code_block ELSE code_block') {|_,_,e,_,tc,_,fc| If.new(e, tc, fc) }
-      clause('IF LPAREN e RPAREN statement ELSE code_block') {|_,_,e,_,ts,_,fc| If.new(e, ts, fc) }
-      clause('IF LPAREN e RPAREN code_block ELSE statement') {|_,_,e,_,tc,_,fs| If.new(e, tc, fs) }
+      clause('if_preamble statement')                  { |e, s|      If.new(e, s, nil) }
+      clause('if_preamble code_block')                 { |e, c|      If.new(e, c, nil) }
+      clause('if_preamble statement ELSE statement')   { |e,ts,_,fs| If.new(e, ts, fs) }
+      clause('if_preamble code_block ELSE code_block') { |e,tc,_,fc| If.new(e, tc, fc) }
+      clause('if_preamble statement ELSE code_block')  { |e,ts,_,fc| If.new(e, ts, fc) }
+      clause('if_preamble code_block ELSE statement')  { |e,tc,_,fs| If.new(e, tc, fs) }
+    end
+
+    production(:if_preamble) do
+      clause('IF LPAREN e RPAREN') { |_, _, e, _| e }
     end
 
     production(:e) do
