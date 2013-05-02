@@ -22,6 +22,7 @@ module Oryx
       output("lex") { tabularize_output tokens }
       puts "complete".green
 
+      print "parsing".blue+"."*17
       finalize_parser
       p = Parser.new
       parse_flags = Hash.new
@@ -31,6 +32,7 @@ module Oryx
                          }
                         ) if @verbose
       ast = p.parse(tokens, parse_flags)
+      puts "complete".green
 
       c = Contractor.new
       c.begin ast
