@@ -24,7 +24,13 @@ module Oryx
 
       finalize_parser
       p = Parser.new
-      ast = p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot', verbose: 'parse.out')
+      parse_flags = Hash.new
+      parse_flags.merge!( {
+                          parse_tree: name("parse.dot"),
+                          verbose:    name("parse.log")
+                         }
+                        ) if @verbose
+      ast = p.parse(tokens, parse_flags)
 
       c = Contractor.new
       c.begin ast
