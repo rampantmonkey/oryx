@@ -46,13 +46,15 @@ module Oryx
 
     private
       def finalize_parser
-        if @verbose
-          explain_file = name("parse")
-          Parser.class_eval do
-            finalize explain: explain_file
+        if 0 == Parser.class_eval { @states.length }
+          if @verbose
+            explain_file = name("parse")
+            Parser.class_eval do
+              finalize explain: explain_file
+            end
+          else
+            Parser.class_eval { finalize }
           end
-        else
-          Parser.class_eval { finalize }
         end
       end
 
