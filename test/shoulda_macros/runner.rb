@@ -10,25 +10,19 @@ module Oryx
           teardown_helper base_name
         end
 
-        should "create LLVM IR" do
+        should "create files" do
           path = @directory + "#{@base_name}.ll"
           assert path.exist?, "#{path} was not created"
-        end
 
-        should "translate IR into Assembly" do
           path = @directory + "#{@base_name}.s"
           assert path.exist?, "#{path} was not created"
-        end
 
-        should "create executable" do
           path = @directory + "#{@base_name}.out"
           assert path.exist?, "#{path} was not created"
           assert path.executable?, "#{path} is not an executable"
-        end
 
-        should "return the correct result" do
           path = @directory + "#{@base_name}.out"
-          assert_equal return_value, %x[#{path}; echo $?].to_i
+          assert_equal return_value, %x[#{path}; echo $?].to_i, "Wrong result returned"
         end
       end
     end
@@ -52,7 +46,10 @@ module Oryx
       end
 
       def teardown_helper file
-        %w[ll s out].each { |e| (@directory+"#{@base_name}.#{e}").delete }
+        %w[ll s out].each do |e|
+          path = @directory+"#{@base_name}.#{e}"
+          path.delete if path.exist?
+        end
       end
   end
 end
