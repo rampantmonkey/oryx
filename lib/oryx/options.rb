@@ -7,9 +7,12 @@ module Oryx
     DEFAULT_OUTPUT = Pathname.new("/tmp/oryx-output")
 
     def initialize(argv)
-      @config = {output: DEFAULT_OUTPUT,
-                 input:  DEFAULT_INPUT}
+      @config = {output:  DEFAULT_OUTPUT,
+                 input:   DEFAULT_INPUT,
+                 verbose: false}
+
       parse(argv)
+
       begin
         input = Pathname.new(argv.pop).expand_path
         @config[:input] = input
@@ -36,6 +39,9 @@ module Oryx
         end
         opts.on("-o", "--output FILE", String, "Output filename") do |path|
           @config[:output] = Pathname.new(path).expand_path
+        end
+        opts.on("-v", "--verbose", "Auxilary information about compilation process") do
+          @config[:verbose] = true
         end
 
         begin
