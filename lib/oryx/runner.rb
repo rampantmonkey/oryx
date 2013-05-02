@@ -9,14 +9,17 @@ module Oryx
       @options = Options.new argv
       @input_filename  = @options.input
       @output_filename = @options.output
+      @verbose = @options.verbose
     end
 
     def run
       puts "input:  #{input_filename}"
       puts "output: #{output_filename}"
+
       print "lexing".blue+"."*17
       l = Lexer.new
-      output_filename.open('w:UTF-8') { |f| f.write(tabularize_output l.lex_file(input_filename.to_s)) }
+      tokens = l.lex_file(input_filename.to_s)
+      output("lex") { tabularize_output tokens }
       puts "complete".green
 
       p = Parser.new
@@ -49,6 +52,13 @@ module Oryx
 
       def base_name
         input_filename.to_s.split('.').first
+      end
+
+      def output extension
+        if @verbose
+          file = Pathname.new "#{base_name}.#{extension.to_s}"
+          file.open('w:UTF-8') { |f| f.write (yield) }
+        end
       end
 
       def output_ir ir_module
