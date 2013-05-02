@@ -135,6 +135,5 @@ module Oryx
       clause('IDENT LPAREN opt_arg_list RPAREN') { |i, _, oal, _| Call.new(i, oal) }
     end
 
-    finalize explain: 'explain.out'
   end
 end

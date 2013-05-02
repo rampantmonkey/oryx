@@ -22,6 +22,7 @@ module Oryx
       output("lex") { tabularize_output tokens }
       puts "complete".green
 
+      finalize_parser
       p = Parser.new
       ast = p.parse(l.lex_file(input_filename.to_s), parse_tree: 'tree.dot', verbose: 'parse.out')
 
@@ -36,6 +37,17 @@ module Oryx
     end
 
     private
+      def finalize_parser
+        if @verbose
+          explain_file = name("parse")
+          Parser.class_eval do
+            finalize explain: explain_file
+          end
+        else
+          Parser.class_eval { finalize }
+        end
+      end
+
       def tabularize_output tokens
         s = table_header
         tokens.each do |t|
