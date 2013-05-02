@@ -54,9 +54,13 @@ module Oryx
         input_filename.to_s.split('.').first
       end
 
+      def name extension
+        "#{base_name}.#{extension.to_s}"
+      end
+
       def output extension
         if @verbose
-          file = Pathname.new "#{base_name}.#{extension.to_s}"
+          file = Pathname.new name(extension)
           file.open('w:UTF-8') { |f| f.write (yield) }
         end
       end
