@@ -23,16 +23,16 @@ module Oryx
 
     private
       def lex code
-        print "lexing".blue+"."*17
+        STDERR.print "lexing".blue+"."*17
         l = Lexer.new
         tokens = l.lex_file(code)
         output("lex") { tabularize_output tokens }
-        puts "complete".green
+        STDERR.puts "complete".green
         tokens
       end
 
       def parse tokens=[]
-        print "parsing".blue+"."*17
+        STDERR.print "parsing".blue+"."*17
         finalize_parser
         p = Parser.new
         parse_flags = Hash.new
@@ -42,11 +42,12 @@ module Oryx
                            }
                           ) if @verbose
         ast = p.parse(tokens, parse_flags)
-        puts "complete".green
+        STDERR.puts "complete".green
         ast
       end
 
       def generate ast
+        STDERR.print "generating".blue+"."*17
         c = Contractor.new
         c.begin ast
 
@@ -54,6 +55,7 @@ module Oryx
 
         translate_to_assembly
         create_executable
+        STDERR.puts "complete".green
       end
 
       def finalize_parser
