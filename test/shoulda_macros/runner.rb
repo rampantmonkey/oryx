@@ -41,7 +41,7 @@ module Oryx
       def setup_helper file
         @directory = Pathname.new "test/data/"
         @base_name = file
-        r = Runner.new [(@directory+"#{@base_name}.c")]
+        r = Runner.new [(@directory+"#{@base_name}.c"), "-o", (@directory+"#{@base_name}.out").to_s]
         stfu {r.run}
       end
 

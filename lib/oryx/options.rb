@@ -4,7 +4,7 @@ require 'pathname'
 module Oryx
   class Options
     DEFAULT_INPUT = ""
-    DEFAULT_OUTPUT = "a.out"
+    DEFAULT_OUTPUT = Pathname.new "a.out"
 
     def initialize(argv)
       @config = {output:  DEFAULT_OUTPUT,
