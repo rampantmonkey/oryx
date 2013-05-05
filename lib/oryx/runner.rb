@@ -16,35 +16,46 @@ module Oryx
       puts "input:  #{input_filename}"
       puts "output: #{output_filename}"
 
-      print "lexing".blue+"."*17
-      l = Lexer.new
-      tokens = l.lex_file(input_filename.to_s)
-      output("lex") { tabularize_output tokens }
-      puts "complete".green
-
-      print "parsing".blue+"."*17
-      finalize_parser
-      p = Parser.new
-      parse_flags = Hash.new
-      parse_flags.merge!( {
-                          parse_tree: name("parse.dot"),
-                          verbose:    name("parse.log")
-                         }
-                        ) if @verbose
-      ast = p.parse(tokens, parse_flags)
-      puts "complete".green
-
-      c = Contractor.new
-      c.begin ast
-
-      output_ir c.module
-
-      translate_to_assembly
-      create_executable
-
+      tokens = lex input_filename
+      ast    = parse tokens
+      generate ast
     end
 
     private
+      def lex code
+        print "lexing".blue+"."*17
+        l = Lexer.new
+        tokens = l.lex_file(code)
+        output("lex") { tabularize_output tokens }
+        puts "complete".green
+        tokens
+      end
+
+      def parse tokens=[]
+        print "parsing".blue+"."*17
+        finalize_parser
+        p = Parser.new
+        parse_flags = Hash.new
+        parse_flags.merge!( {
+                            parse_tree: name("parse.dot"),
+                            verbose:    name("parse.log")
+                           }
+                          ) if @verbose
+        ast = p.parse(tokens, parse_flags)
+        puts "complete".green
+        ast
+      end
+
+      def generate ast
+        c = Contractor.new
+        c.begin ast
+
+        output_ir c.module
+
+        translate_to_assembly
+        create_executable
+      end
+
       def finalize_parser
         if 0 == Parser.class_eval { @states.length }
           if @verbose
