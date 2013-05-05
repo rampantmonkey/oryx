@@ -109,11 +109,11 @@ module Oryx
       end
 
       def translate_to_assembly
-        `llc -disable-cfi #{base_name}.ll`
+        `llc -disable-cfi #{name "ll"}`
       end
 
       def create_executable
-        `gcc #{base_name}.s -o #{base_name}.out`
+        `gcc #{base_name}.s -o #{output_filename}`
       end
 
       def table_header
