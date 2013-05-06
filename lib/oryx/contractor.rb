@@ -61,8 +61,22 @@ module Oryx
     end
 
     on CodeBlock do |node|
-      a = node.statements.map {|s| visit s}
-      a.first
+      st.enter_scope
+      start = current_block
+      fun = start.parent
+      b = fun.blocks.append('code_block')
+      value = ''
+      new_b = ''
+      node.statements.each do |s|
+        value, new_b = visit s, at: b, rcb: true
+      end
+
+      phi_bb = fun.blocks.append('phi_bb', self)
+      phi_inst = build(phi_bb) { phi RLTK::CG::NativeIntType, { new_b => value, new_b => value}, 'iftmp' }
+      build(start) { br b }
+      build(new_b) { br phi_bb }
+      st.exit_scope
+      returning(phi_inst) { target phi_bb }
     end
 
     on Return do |node|
