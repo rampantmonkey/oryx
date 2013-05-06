@@ -19,7 +19,8 @@ module Oryx
       should_generate_toolchain_output("geq", 9)
       should_generate_toolchain_output("eq", 5)
       should_generate_toolchain_output("neq", 4)
-      should_generate_toolchain_output("if", 21)
+      should_generate_toolchain_output("if", 1)
+      should_generate_toolchain_output("if_2", 21)
       should_generate_toolchain_output("fib", 34)
     end
   end
