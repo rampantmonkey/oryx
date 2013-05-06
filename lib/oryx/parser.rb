@@ -94,7 +94,7 @@ module Oryx
       clause('e SEMI') { |e, _| e }
       clause('if_statement') { |i| i}
       clause('WHILE LPAREN e RPAREN code_block') {|_,_,e,_,c| While.new(e,c) }
-      clause('type_spec IDENT ASSIGN e SEMI')         { |t, e0, _, e1, _| Initialization.new t, e0, e1 }
+      clause('type_spec IDENT ASSIGN e SEMI')         { |t, e0, _, e1, _| Initialization.new e0, e1, t }
       clause('type_spec IDENT SEMI')                  { |t, i, _ | Declaration.new i,t }
     end
 
