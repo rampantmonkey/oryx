@@ -102,6 +102,16 @@ module Oryx
       end
     end
 
+    on Initialization do |node|
+      name = node.name.to_sym
+      value = visit node.right
+      begin
+        st.insert(name, value)
+      rescue SymbolTableError => e
+        STDERR.puts e.message, "Continuing processing without modifying the symbol table"
+      end
+    end
+
     on GDeclaration do |node|
       name = node.name.to_sym
       begin
