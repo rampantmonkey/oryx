@@ -99,6 +99,7 @@ module Oryx
       when LEQ then integer_cast(icmp(:sle, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when EQ  then integer_cast(icmp(:eq, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when NEQ then integer_cast(icmp(:ne, left, right), RLTK::CG::NativeIntType, 'booltmp')
+      when And then integer_cast((build_inst :and, left, right), RLTK::CG::NativeIntType, 'andtmp')
       end
     end
 

@@ -77,8 +77,9 @@ module Oryx
   class GEQ < Binary; end
   class LE  < Binary; end
   class LEQ < Binary; end
-  class EQ < Binary; end
+  class EQ  < Binary; end
   class NEQ < Binary; end
+  class And < Binary; end
 
   class Return < Expression
     child :right, Expression

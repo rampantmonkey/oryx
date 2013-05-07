@@ -129,6 +129,7 @@ module Oryx
       clause('e LEQ e')   { |e0, _, e1| LEQ.new(e0, e1) }
       clause('e EQ e')    { |e0, _, e1| EQ.new(e0, e1) }
       clause('e NEQ e')   { |e0, _, e1| NEQ.new(e0, e1) }
+      clause('e AND e')   { |e0, _, e1| And.new(e0, e1) }
 
       clause('TRUE')      { |t| BoolConst.new (:true) }
       clause('FALSE')      { |t| BoolConst.new (:false) }
