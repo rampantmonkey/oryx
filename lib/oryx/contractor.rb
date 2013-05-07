@@ -106,6 +106,11 @@ module Oryx
       RLTK::CG::NativeInt.new(node.value)
     end
 
+    on BoolConst do |node|
+      int_val = (node.value == :true) ? 1 : 0
+      RLTK::CG::Int1.new(int_val)
+    end
+
     on GInitialization do |node|
       name = node.name.to_sym
       value = visit node.right

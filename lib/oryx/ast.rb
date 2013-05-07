@@ -7,6 +7,14 @@ module Oryx
     value :value, Integer
   end
 
+  class Cstring < Expression
+    value :value, String
+  end
+
+  class BoolConst < Expression
+    value :value, Symbol
+  end
+
   class Type < Expression
     value :t, String
   end
