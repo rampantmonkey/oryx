@@ -32,14 +32,19 @@ module Oryx
         param_types = parameter_types node.params
         return_type = visit node.return_type
         fun = @module.functions.add(node.i, return_type, param_types)
-        node.params.params.each {|p| visit p}
         param_names = parameter_names node.params
         param_names.each_with_index do |name, i|
-          st.update name.to_sym, fun.params[i]
+          fun.params[i].name = name
         end
       end
-
-      ret (visit node.body, at: fun.blocks.append('entry'))
+      build(fun.blocks.append('entry')) do
+        fun.params.each do |param|
+          loc = alloca RLTK::CG::NativeIntType, param.name
+          st.insert param.name, loc
+          store param, loc
+        end
+        ret ( visit node.body )
+      end
       st.exit_scope
 
       returning(fun) { fun.verify }
@@ -54,7 +59,7 @@ module Oryx
 
     on Variable do |node|
       begin
-        st.lookup node.name.to_sym
+       self.load (st.lookup node.name.to_sym), node.name
       rescue SymbolTableError => e
         STDERR.puts e.message, "Attempting to continue without this value."
       end
@@ -121,18 +126,24 @@ module Oryx
     on GInitialization do |node|
       name = node.name.to_sym
       value = visit node.right
+      loc = alloca RLTK::CG::NativeIntType, name.to_s
+      puts "#{name} -> #{loc}"
       begin
-        st.insert(name, value)
+        st.insert(name, loc)
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing without modifying the symbol table"
       end
+      puts "#{name} -> #{st.lookup name}"
+      store value, loc
     end
 
     on Initialization do |node|
       name = node.name.to_sym
       value = visit node.right
+      loc = alloca RLTK::CG::NativeIntType, name.to_s
       begin
-        st.insert(name, value)
+        st.insert(name, loc)
+        store value, loc
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing without modifying the symbol table"
       end
@@ -140,8 +151,9 @@ module Oryx
 
     on GDeclaration do |node|
       name = node.name.to_sym
+      loc = alloca RLTK::CG::NativeIntType, name.to_s
       begin
-        st.insert name
+        st.insert name, loc
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing without modifying the symbol table"
       end
@@ -149,8 +161,9 @@ module Oryx
 
     on Declaration do |node|
       name = node.name.to_sym
+      loc = alloca RLTK::CG::NativeIntType, name.to_s
       begin
-        st.insert name
+        st.insert name, loc
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing without modifying the symbol table"
       end
@@ -160,7 +173,8 @@ module Oryx
       value = visit node.right
       name = node.name.to_sym
       begin
-        st.update name, value
+        loc = st.lookup name
+        store value, loc
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing witout modifying the symbol table"
       end
