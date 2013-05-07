@@ -118,6 +118,7 @@ module Oryx
       clause('constant') { |c| c }
       clause('IDENT ASSIGN e') { |e0, _, e1| Assign.new e0, e1 }
 
+      clause('MINUS e')   { |_, e|      Neg.new(e) }
       clause('e PLUS e')  { |e0, _, e1| Add.new(e0, e1) }
       clause('e MINUS e') { |e0, _, e1| Sub.new(e0, e1) }
       clause('e TIMES e') { |e0, _, e1| Mul.new(e0, e1) }

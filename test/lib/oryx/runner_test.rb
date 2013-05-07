@@ -22,6 +22,9 @@ module Oryx
       should_generate_toolchain_output("if", 1)
       should_generate_toolchain_output("if_2", 21)
       should_generate_toolchain_output("fib", 34)
+      should_generate_toolchain_output("neg", (-1)%256)
+      should_generate_toolchain_output("neg2", (-11)%256)
+      should_generate_toolchain_output("neg3", 50)
     end
   end
 end

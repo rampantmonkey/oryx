@@ -111,6 +111,11 @@ module Oryx
       RLTK::CG::Int1.new(int_val)
     end
 
+    on Neg do |node|
+      right = visit node.right
+      sub(ZERO, right, 'negtmp')
+    end
+
     on GInitialization do |node|
       name = node.name.to_sym
       value = visit node.right

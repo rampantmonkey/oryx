@@ -29,6 +29,12 @@ module Oryx
     child :right, Expression
   end
 
+  class Uniary < Expression
+    child :right, Expression
+  end
+
+  class Neg < Uniary; end
+
   class Initialization < Expression
     value :name, String
     child :right, Expression
