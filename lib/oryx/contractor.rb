@@ -100,6 +100,7 @@ module Oryx
       when EQ  then integer_cast(icmp(:eq, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when NEQ then integer_cast(icmp(:ne, left, right), RLTK::CG::NativeIntType, 'booltmp')
       when And then integer_cast((build_inst :and, left, right), RLTK::CG::NativeIntType, 'andtmp')
+      when Or  then integer_cast((build_inst :or, left, right), RLTK::CG::NativeIntType, 'ortmp')
       end
     end
 

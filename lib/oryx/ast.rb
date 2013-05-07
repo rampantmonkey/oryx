@@ -80,6 +80,7 @@ module Oryx
   class EQ  < Binary; end
   class NEQ < Binary; end
   class And < Binary; end
+  class Or  < Binary; end
 
   class Return < Expression
     child :right, Expression

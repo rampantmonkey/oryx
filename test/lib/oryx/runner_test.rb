@@ -27,6 +27,8 @@ module Oryx
       should_generate_toolchain_output("neg3", 50)
       should_generate_toolchain_output("and", 5)
       should_generate_toolchain_output("and2", 4)
+      should_generate_toolchain_output("or", 9)
+      should_generate_toolchain_output("or2", 3)
     end
   end
 end
