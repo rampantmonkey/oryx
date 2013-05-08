@@ -182,6 +182,7 @@ module Oryx
       begin
         loc = st.lookup name
         store value, loc
+        self.load loc, name.to_s
       rescue SymbolTableError => e
         STDERR.puts e.message, "Continuing processing witout modifying the symbol table"
       end
