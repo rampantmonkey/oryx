@@ -71,15 +71,20 @@ module Oryx
       fun = start.parent
       b = fun.blocks.append('code_block')
       value = ''
-      new_b = ''
+      next_b = [b]
       node.statements.each do |s|
-        value, new_b = visit s, at: b, rcb: true
+        value, new_b = visit s, at: next_b.last, rcb: true
+        if new_b != b
+          build(next_b.last) { br new_b}
+          next_b << new_b
+        end
       end
 
+
       phi_bb = fun.blocks.append('phi_bb', self)
-      phi_inst = build(phi_bb) { phi RLTK::CG::NativeIntType, { new_b => value, new_b => value}, 'iftmp' }
+      phi_inst = build(phi_bb) { phi RLTK::CG::NativeIntType, { next_b.last=> value, next_b.last => value}, 'iftmp' }
       build(start) { br b }
-      build(new_b) { br phi_bb }
+      build(next_b.last) { br phi_bb }
       st.exit_scope
       returning(phi_inst) { target phi_bb }
     end
