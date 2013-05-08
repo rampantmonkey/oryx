@@ -13,6 +13,7 @@ module Oryx
 #      should_generate_toolchain_output("gvar_3", 15)
       should_generate_toolchain_output("fun_1", 9)
       should_generate_toolchain_output("fun_2", 25)
+      should_generate_toolchain_output("fun_3", 121)
       should_generate_toolchain_output("fun_4", 8)
       should_generate_toolchain_output("ge", 7)
       should_generate_toolchain_output("le", 8)
@@ -34,6 +35,7 @@ module Oryx
       should_generate_toolchain_output("or", 9)
       should_generate_toolchain_output("or2", 3)
       should_generate_toolchain_output("mut", 182)
+      should_generate_toolchain_output("long", 26)
     end
   end
 end
