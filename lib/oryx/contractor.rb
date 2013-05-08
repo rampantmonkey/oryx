@@ -17,6 +17,7 @@ module Oryx
       super
       @module = RLTK::CG::Module.new('Oryx JIT')
       @st = SymbolTable.new
+      @branch_needed = true
     end
 
     def begin ast
@@ -75,7 +76,8 @@ module Oryx
       node.statements.each do |s|
         value, new_b = visit s, at: next_b.last, rcb: true
         if new_b != b
-          build(next_b.last) { br new_b}
+          build(next_b.last) { br new_b} if @branch_needed
+          @branch_needed = true
           next_b << new_b
         end
       end
@@ -210,6 +212,7 @@ module Oryx
       build(start_bb) { cond cond_val, then_bb, else_bb }
       build(new_then_bb) { br merge_bb }
       build(new_else_bb) { br merge_bb }
+      @branch_needed = false
       returning(phi_inst) { target merge_bb }
     end
 
