@@ -7,6 +7,7 @@ C-Flat is a working subset of C designed for use in compilers courses. C-Flat in
  - `boolean`
  - `char`
  - `else`
+ - `false`
  - `if`
  - `int`
  - `print`
@@ -29,6 +30,7 @@ C-Flat ignores whitespace (beyond separating identifiers).
 C-Flat includes many of the arithmetic operators found in C. Here they are enumerated with precedence.
 
     ( )                  grouping            ^   (highest precedence)
+    -                    negation            |
     * /                  multiplication      |
     + -                  addition            |
     < <= >= == !=        comparison          |
