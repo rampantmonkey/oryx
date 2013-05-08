@@ -73,10 +73,10 @@ module Oryx
       b = fun.blocks.append('code_block')
       value = ''
       next_b = [b]
-      node.statements.each do |s|
+      node.statements.each_with_index do |s, i|
         value, new_b = visit s, at: next_b.last, rcb: true
         if new_b != b
-          build(next_b.last) { br new_b} if @branch_needed
+          build(next_b.last) { br new_b} if @branch_needed and i != node.statements.count-1
           @branch_needed = true
           next_b << new_b
         end
