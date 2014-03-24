@@ -68,4 +68,4 @@ Provided by [Travis-CI](http://travis-ci.org)
 
 ## License
 
-MIT
+Oryx is licensed under [The MIT License](http://opensource.org/licenses/MIT).
