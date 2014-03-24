@@ -87,4 +87,4 @@ My familiarity with Ruby re-enforced the choice of language.
 - [Intermediate Representation](intermediate_lang.md)
 - [Translation into x86 Assembly](x86_translation.md)
 - [Conclusion](conclusion.md)
-
+- [Releases](releases.md)

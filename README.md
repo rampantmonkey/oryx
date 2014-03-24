@@ -1,30 +1,6 @@
 # Oryx
 C-Flat to x86 compiler.
 
-## Progress
-
-- 20 Feb 13
-    + Oryx 0.1.1
-    + Lexer complete
-- 1 April 13
-    + Oryx 0.2.1
-    + Parse Tree successfully generated
-- 3 April 13
-    + Oryx 0.2.7
-    + Symbol Table implemented
-- 29 April 13
-    + Oryx 0.3.1
-    + Abstract Syntax Tree defined and generated
-    + Fixed Travis errors by pre-compiling LLVM shared library
-- 8 May 13
-    + Oryx 0.3.7
-    + Added mutable values
-    + Introduced negation of integers
-    + `and` and `or` code generation
-    + Improved UX
-    + Debug mode
-
-
 ## C-Flat
 C-Flat is a working subset of C designed for use in compilers courses. C-flat includes expressions, basic control flow, recursive functions, and strict type checking. It is object-compatible with ordinary C and thus can take advantage of the standard C library, at least when using limited types.
 
@@ -48,7 +24,6 @@ For more details try
 ## See Also
 
 `doc/intro.md`
-
 
 ## Contributing
 
