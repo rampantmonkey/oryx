@@ -1,5 +1,5 @@
 # Oryx
-![oryx.png](doc/oryx.png)
+![oryx.png](doc/img/oryx.png)
 
 C-Flat to x86 compiler.
 
